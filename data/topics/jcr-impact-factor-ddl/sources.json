@@ -18,6 +18,7 @@
       "url": "https://journalcitationreports.zendesk.com/",
       "type": "official-support",
       "accessMode": "public",
+      "linkCheckMode": "manual_verified",
       "parser": "jcr-support-corrections",
       "markers": ["JCR data", "correct metrics", "release"],
       "refreshCadence": "monthly",

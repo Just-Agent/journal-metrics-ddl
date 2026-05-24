@@ -57,6 +57,7 @@ for (const dirent of fs.readdirSync(root, { withFileTypes: true })) {
     const array = Array.isArray(records) ? records : records.sourceFamilies || [];
     for (const record of array) {
       if (record.accessMode && record.accessMode !== "public") continue;
+      if (record.linkCheckMode === "manual_verified" || record.linkCheckMode === "skip") continue;
       for (const key of ["url", "sourceUrl"]) {
         if (record[key]) addLink(record[key], `${topicId}:${record.id || record.name}.${key}`);
       }
