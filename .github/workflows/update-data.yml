@@ -29,6 +29,9 @@ jobs:
       - run: npm run crawl
         env:
           TOPIC_ID: ${{ inputs.topic_id }}
+      - run: npm run import:jcr-history
+        env:
+          JCR_HISTORY_CSV: ${{ secrets.JCR_HISTORY_CSV }}
       - run: npm run validate
       - run: npm run link-check
         env:

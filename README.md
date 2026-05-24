@@ -45,6 +45,19 @@ npm run validate
 
 导入后会生成 `cas_major_zone` 指标快照，用于展示某本期刊历年一区/二区/三区/四区变化；导入文件不应提交含敏感授权信息的原始材料。
 
+## JCR 授权导入
+
+单刊影响因子、JIF Quartile 和类别排名通常属于 JCR 授权数据。仓库提供导入通道，但不提交原始授权文件：
+
+```powershell
+Copy-Item data/imports/jcr-impact-history.template.csv data/imports/jcr-impact-history.csv
+$env:JCR_HISTORY_CSV='data/imports/jcr-impact-history.csv'
+npm run import:jcr-history
+npm run validate
+```
+
+导入后会生成两类 `metricSnapshot`：`journal_impact_factor` 和 `jcr_quartile`。公开页面只展示期刊名、年份、JIF、Quartile、类别和来源链接；授权文件本身不进入 Hub 或小程序公开出口。
+
 ## Commands
 
 ```powershell

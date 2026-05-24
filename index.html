@@ -360,6 +360,81 @@
         gap: 16px;
       }
 
+      .jcr-impact-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .jcr-card {
+        min-height: 240px;
+        padding: 22px;
+        border: 1px solid rgba(124, 58, 237, 0.18);
+        border-radius: 26px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.9)),
+          #fff;
+        box-shadow: 0 12px 32px rgba(124, 58, 237, 0.08);
+      }
+
+      .jcr-card h3 {
+        margin: 12px 0 10px;
+        font-size: 22px;
+        line-height: 1.24;
+      }
+
+      .jcr-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .jcr-values {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .jcr-value {
+        padding: 14px;
+        border: 1px solid #e9d5ff;
+        border-radius: 16px;
+        background: #faf5ff;
+      }
+
+      .jcr-value strong {
+        display: block;
+        font-size: 26px;
+        line-height: 1;
+      }
+
+      .jcr-value span {
+        display: block;
+        margin-top: 6px;
+        color: #5b21b6;
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .jcr-series {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .jcr-empty {
+        grid-column: 1 / -1;
+        padding: 24px;
+        border: 1px dashed #c4b5fd;
+        border-radius: 24px;
+        background: #fbfaff;
+        color: #4c1d95;
+        line-height: 1.7;
+        font-weight: 800;
+      }
+
       .journal-card {
         overflow: hidden;
         border: 1px solid var(--line);
@@ -495,6 +570,7 @@
         }
 
         .grid,
+        .jcr-impact-grid,
         .journal-grid {
           grid-template-columns: 1fr;
         }
@@ -587,6 +663,17 @@
           </div>
         </div>
         <div class="timeline" id="timeline"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <span class="pill">JCR Import</span>
+            <h2>单刊影响因子与 Quartile 轨迹</h2>
+            <p>如果机构已有 JCR 授权导出文件，可以导入某本期刊的 JIF、Quartile 和类别排名轨迹。公开页只展示指标值、年份、类别和来源链接；授权文件本身不进入公开页面。</p>
+          </div>
+        </div>
+        <div class="jcr-impact-grid" id="jcrImpactGrid"></div>
       </section>
 
       <section class="section">
@@ -733,6 +820,67 @@
         }).join("");
       }
 
+      function renderJcrImpact(metrics) {
+        const rows = metrics.filter((metric) => (
+          metric.topicId === "jcr-impact-factor-ddl"
+          && ["journal_impact_factor", "jcr_quartile"].includes(metric.metric)
+        ));
+        const target = document.querySelector("#jcrImpactGrid");
+        if (!rows.length) {
+          target.innerHTML = `
+            <div class="jcr-empty">
+              单刊 JIF / Quartile 轨迹等待合规授权导入。当前公开版先展示 JCR 年度发布、后续修正和公开覆盖指标；不会从登录系统或授权数据库中抓取明细。
+            </div>
+          `;
+          return;
+        }
+
+        const grouped = rows.reduce((map, row) => {
+          const key = `${row.journalId || row.journalTitle}-${row.category || "category"}`;
+          if (!map.has(key)) map.set(key, []);
+          map.get(key).push(row);
+          return map;
+        }, new Map());
+
+        const cards = [...grouped.entries()].map(([key, group]) => {
+          const title = group[0]?.journalTitle || key;
+          const category = group[0]?.category || "JCR category";
+          const issn = group[0]?.issn || "ISSN";
+          const years = [...new Set(group.map((row) => Number(row.year)).filter(Boolean))].sort((a, b) => b - a);
+          const latestYear = years[0];
+          const latestJif = group.find((row) => row.metric === "journal_impact_factor" && Number(row.year) === latestYear);
+          const latestQuartile = group.find((row) => row.metric === "jcr_quartile" && Number(row.year) === latestYear);
+          const source = latestJif || latestQuartile || group[0];
+          return `
+            <article class="jcr-card">
+              <span class="pill">${latestYear || "JCR"}</span>
+              <h3>${title}</h3>
+              <p>${category} · ${issn}</p>
+              <div class="jcr-values">
+                <div class="jcr-value">
+                  <strong>${latestJif ? formatNumber(Number(latestJif.value)) : "-"}</strong>
+                  <span>Journal Impact Factor</span>
+                </div>
+                <div class="jcr-value">
+                  <strong>${latestQuartile?.value || "-"}</strong>
+                  <span>JIF Quartile</span>
+                </div>
+              </div>
+              <div class="jcr-series">
+                ${years.map((year) => {
+                  const jif = group.find((row) => row.metric === "journal_impact_factor" && Number(row.year) === year);
+                  const quartile = group.find((row) => row.metric === "jcr_quartile" && Number(row.year) === year);
+                  return `<span class="trend-chip flat">${year}: ${jif ? formatNumber(Number(jif.value)) : "-"} · ${quartile?.value || "-"}</span>`;
+                }).join("")}
+              </div>
+              <div class="meta"><a class="source-link" href="${source.url}" target="_blank" rel="noreferrer">来源</a></div>
+            </article>
+          `;
+        });
+
+        target.innerHTML = cards.join("");
+      }
+
       function renderJournals(metrics) {
         const grouped = metrics
           .filter((metric) => metric.topicId === "journal-volume-ddl")
@@ -793,6 +941,7 @@
         renderStats(items, metrics);
         renderRails(items, metrics);
         renderTimeline(items);
+        renderJcrImpact(metrics);
         renderJournals(metrics);
       }
 

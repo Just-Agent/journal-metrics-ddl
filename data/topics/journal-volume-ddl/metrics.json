@@ -16,7 +16,7 @@
     "scopeNote": "OpenAlex Source object works_count total; this is open metadata coverage and is not equivalent to WoS/JCR article counts.",
     "openAlexId": "https://openalex.org/S52395412",
     "homepageUrl": "http://bioinformatics.oxfordjournals.org/",
-    "citedByCount": 2782228,
+    "citedByCount": 2782542,
     "apiUrl": "https://api.openalex.org/sources/issn:1367-4811"
   },
   {
@@ -27,7 +27,7 @@
     "journalTitle": "Bioinformatics",
     "issn": "1367-4811",
     "metric": "openalex_works_count_by_year",
-    "value": 235,
+    "value": 236,
     "year": 2026,
     "source": "OpenAlex",
     "url": "https://openalex.org/S52395412",
@@ -35,8 +35,8 @@
     "accessMode": "public",
     "scopeNote": "OpenAlex counts_by_year works_count for 2026; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S52395412",
-    "oaWorksCount": 235,
-    "citedByCount": 21,
+    "oaWorksCount": 236,
+    "citedByCount": 24,
     "apiUrl": "https://api.openalex.org/sources/issn:1367-4811"
   },
   {
@@ -47,7 +47,7 @@
     "journalTitle": "Bioinformatics",
     "issn": "1367-4811",
     "metric": "openalex_works_count_by_year",
-    "value": 678,
+    "value": 677,
     "year": 2025,
     "source": "OpenAlex",
     "url": "https://openalex.org/S52395412",
@@ -55,8 +55,8 @@
     "accessMode": "public",
     "scopeNote": "OpenAlex counts_by_year works_count for 2025; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S52395412",
-    "oaWorksCount": 678,
-    "citedByCount": 2040,
+    "oaWorksCount": 677,
+    "citedByCount": 2042,
     "apiUrl": "https://api.openalex.org/sources/issn:1367-4811"
   },
   {
@@ -76,7 +76,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2024; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S52395412",
     "oaWorksCount": 804,
-    "citedByCount": 7876,
+    "citedByCount": 7886,
     "apiUrl": "https://api.openalex.org/sources/issn:1367-4811"
   },
   {
@@ -96,7 +96,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2023; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S52395412",
     "oaWorksCount": 810,
-    "citedByCount": 14521,
+    "citedByCount": 14529,
     "apiUrl": "https://api.openalex.org/sources/issn:1367-4811"
   },
   {
@@ -116,7 +116,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2022; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S52395412",
     "oaWorksCount": 713,
-    "citedByCount": 28840,
+    "citedByCount": 28852,
     "apiUrl": "https://api.openalex.org/sources/issn:1367-4811"
   },
   {
@@ -136,7 +136,7 @@
     "scopeNote": "OpenAlex Source object works_count total; this is open metadata coverage and is not equivalent to WoS/JCR article counts.",
     "openAlexId": "https://openalex.org/S4393917726",
     "homepageUrl": null,
-    "citedByCount": 1201703,
+    "citedByCount": 1201886,
     "apiUrl": "https://api.openalex.org/sources/issn:1756-1833"
   },
   {
@@ -176,7 +176,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2025; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S4393917726",
     "oaWorksCount": 1096,
-    "citedByCount": 8067,
+    "citedByCount": 8074,
     "apiUrl": "https://api.openalex.org/sources/issn:1756-1833"
   },
   {
@@ -196,7 +196,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2024; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S4393917726",
     "oaWorksCount": 1152,
-    "citedByCount": 18239,
+    "citedByCount": 18256,
     "apiUrl": "https://api.openalex.org/sources/issn:1756-1833"
   },
   {
@@ -216,7 +216,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2023; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S4393917726",
     "oaWorksCount": 1315,
-    "citedByCount": 22061,
+    "citedByCount": 22072,
     "apiUrl": "https://api.openalex.org/sources/issn:1756-1833"
   },
   {
@@ -236,7 +236,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2022; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S4393917726",
     "oaWorksCount": 1562,
-    "citedByCount": 37775,
+    "citedByCount": 37783,
     "apiUrl": "https://api.openalex.org/sources/issn:1756-1833"
   },
   {
@@ -256,7 +256,7 @@
     "scopeNote": "OpenAlex Source object works_count total; this is open metadata coverage and is not equivalent to WoS/JCR article counts.",
     "openAlexId": "https://openalex.org/S110447773",
     "homepageUrl": "https://www.sciencedirect.com/journal/cell",
-    "citedByCount": 8925812,
+    "citedByCount": 8926359,
     "apiUrl": "https://api.openalex.org/sources/issn:0092-8674"
   },
   {
@@ -275,8 +275,8 @@
     "accessMode": "public",
     "scopeNote": "OpenAlex counts_by_year works_count for 2026; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S110447773",
-    "oaWorksCount": 118,
-    "citedByCount": 413,
+    "oaWorksCount": 119,
+    "citedByCount": 414,
     "apiUrl": "https://api.openalex.org/sources/issn:0092-8674"
   },
   {
@@ -296,7 +296,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2025; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S110447773",
     "oaWorksCount": 346,
-    "citedByCount": 10357,
+    "citedByCount": 10372,
     "apiUrl": "https://api.openalex.org/sources/issn:0092-8674"
   },
   {
@@ -316,7 +316,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2024; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S110447773",
     "oaWorksCount": 477,
-    "citedByCount": 35902,
+    "citedByCount": 35932,
     "apiUrl": "https://api.openalex.org/sources/issn:0092-8674"
   },
   {
@@ -336,7 +336,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2023; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S110447773",
     "oaWorksCount": 383,
-    "citedByCount": 51816,
+    "citedByCount": 51839,
     "apiUrl": "https://api.openalex.org/sources/issn:0092-8674"
   },
   {
@@ -356,7 +356,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2022; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S110447773",
     "oaWorksCount": 324,
-    "citedByCount": 67550,
+    "citedByCount": 67565,
     "apiUrl": "https://api.openalex.org/sources/issn:0092-8674"
   },
   {
@@ -376,7 +376,7 @@
     "scopeNote": "OpenAlex Source object works_count total; this is open metadata coverage and is not equivalent to WoS/JCR article counts.",
     "openAlexId": "https://openalex.org/S199944782",
     "homepageUrl": "http://www.computer.org/portal/web/tpami",
-    "citedByCount": 1856290,
+    "citedByCount": 1856447,
     "apiUrl": "https://api.openalex.org/sources/issn:0162-8828"
   },
   {
@@ -387,7 +387,7 @@
     "journalTitle": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
     "issn": "0162-8828",
     "metric": "openalex_works_count_by_year",
-    "value": 430,
+    "value": 431,
     "year": 2026,
     "source": "OpenAlex",
     "url": "https://openalex.org/S199944782",
@@ -395,7 +395,7 @@
     "accessMode": "public",
     "scopeNote": "OpenAlex counts_by_year works_count for 2026; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S199944782",
-    "oaWorksCount": 86,
+    "oaWorksCount": 87,
     "citedByCount": 157,
     "apiUrl": "https://api.openalex.org/sources/issn:0162-8828"
   },
@@ -407,7 +407,7 @@
     "journalTitle": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
     "issn": "0162-8828",
     "metric": "openalex_works_count_by_year",
-    "value": 943,
+    "value": 942,
     "year": 2025,
     "source": "OpenAlex",
     "url": "https://openalex.org/S199944782",
@@ -415,8 +415,8 @@
     "accessMode": "public",
     "scopeNote": "OpenAlex counts_by_year works_count for 2025; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S199944782",
-    "oaWorksCount": 116,
-    "citedByCount": 4761,
+    "oaWorksCount": 115,
+    "citedByCount": 4768,
     "apiUrl": "https://api.openalex.org/sources/issn:0162-8828"
   },
   {
@@ -436,7 +436,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2024; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S199944782",
     "oaWorksCount": 128,
-    "citedByCount": 19199,
+    "citedByCount": 19214,
     "apiUrl": "https://api.openalex.org/sources/issn:0162-8828"
   },
   {
@@ -456,7 +456,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2023; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S199944782",
     "oaWorksCount": 138,
-    "citedByCount": 29570,
+    "citedByCount": 29585,
     "apiUrl": "https://api.openalex.org/sources/issn:0162-8828"
   },
   {
@@ -476,7 +476,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2022; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S199944782",
     "oaWorksCount": 250,
-    "citedByCount": 38249,
+    "citedByCount": 38256,
     "apiUrl": "https://api.openalex.org/sources/issn:0162-8828"
   },
   {
@@ -496,7 +496,7 @@
     "scopeNote": "OpenAlex Source object works_count total; this is open metadata coverage and is not equivalent to WoS/JCR article counts.",
     "openAlexId": "https://openalex.org/S172573765",
     "homepageUrl": "http://jama.ama-assn.org/",
-    "citedByCount": 6961538,
+    "citedByCount": 6961830,
     "apiUrl": "https://api.openalex.org/sources/issn:0098-7484"
   },
   {
@@ -535,8 +535,8 @@
     "accessMode": "public",
     "scopeNote": "OpenAlex counts_by_year works_count for 2025; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S172573765",
-    "oaWorksCount": 330,
-    "citedByCount": 8263,
+    "oaWorksCount": 331,
+    "citedByCount": 8280,
     "apiUrl": "https://api.openalex.org/sources/issn:0098-7484"
   },
   {
@@ -556,7 +556,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2024; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S172573765",
     "oaWorksCount": 387,
-    "citedByCount": 25965,
+    "citedByCount": 25987,
     "apiUrl": "https://api.openalex.org/sources/issn:0098-7484"
   },
   {
@@ -576,7 +576,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2023; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S172573765",
     "oaWorksCount": 538,
-    "citedByCount": 44237,
+    "citedByCount": 44258,
     "apiUrl": "https://api.openalex.org/sources/issn:0098-7484"
   },
   {
@@ -596,7 +596,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2022; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S172573765",
     "oaWorksCount": 579,
-    "citedByCount": 52463,
+    "citedByCount": 52485,
     "apiUrl": "https://api.openalex.org/sources/issn:0098-7484"
   },
   {
@@ -607,7 +607,7 @@
     "journalTitle": "Nature",
     "issn": "0028-0836",
     "metric": "openalex_works_count_total",
-    "value": 448564,
+    "value": 448565,
     "asOfDate": "2026-05-24",
     "source": "OpenAlex",
     "url": "https://openalex.org/S137773608",
@@ -616,7 +616,7 @@
     "scopeNote": "OpenAlex Source object works_count total; this is open metadata coverage and is not equivalent to WoS/JCR article counts.",
     "openAlexId": "https://openalex.org/S137773608",
     "homepageUrl": "https://www.nature.com/nature/",
-    "citedByCount": 26883169,
+    "citedByCount": 26885522,
     "apiUrl": "https://api.openalex.org/sources/issn:0028-0836"
   },
   {
@@ -635,8 +635,8 @@
     "accessMode": "public",
     "scopeNote": "OpenAlex counts_by_year works_count for 2026; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S137773608",
-    "oaWorksCount": 568,
-    "citedByCount": 1493,
+    "oaWorksCount": 570,
+    "citedByCount": 1510,
     "apiUrl": "https://api.openalex.org/sources/issn:0028-0836"
   },
   {
@@ -656,7 +656,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2025; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S137773608",
     "oaWorksCount": 1752,
-    "citedByCount": 44863,
+    "citedByCount": 44948,
     "apiUrl": "https://api.openalex.org/sources/issn:0028-0836"
   },
   {
@@ -676,7 +676,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2024; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S137773608",
     "oaWorksCount": 1814,
-    "citedByCount": 131643,
+    "citedByCount": 131734,
     "apiUrl": "https://api.openalex.org/sources/issn:0028-0836"
   },
   {
@@ -696,7 +696,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2023; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S137773608",
     "oaWorksCount": 1612,
-    "citedByCount": 220636,
+    "citedByCount": 220730,
     "apiUrl": "https://api.openalex.org/sources/issn:0028-0836"
   },
   {
@@ -715,8 +715,8 @@
     "accessMode": "public",
     "scopeNote": "OpenAlex counts_by_year works_count for 2022; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S137773608",
-    "oaWorksCount": 1735,
-    "citedByCount": 246814,
+    "oaWorksCount": 1736,
+    "citedByCount": 246880,
     "apiUrl": "https://api.openalex.org/sources/issn:0028-0836"
   },
   {
@@ -736,7 +736,7 @@
     "scopeNote": "OpenAlex Source object works_count total; this is open metadata coverage and is not equivalent to WoS/JCR article counts.",
     "openAlexId": "https://openalex.org/S106963461",
     "homepageUrl": "http://www.nature.com/nbt",
-    "citedByCount": 1862341,
+    "citedByCount": 1862529,
     "apiUrl": "https://api.openalex.org/sources/issn:1087-0156"
   },
   {
@@ -756,7 +756,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2026; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S106963461",
     "oaWorksCount": 40,
-    "citedByCount": 89,
+    "citedByCount": 91,
     "apiUrl": "https://api.openalex.org/sources/issn:1087-0156"
   },
   {
@@ -776,7 +776,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2025; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S106963461",
     "oaWorksCount": 135,
-    "citedByCount": 2195,
+    "citedByCount": 2200,
     "apiUrl": "https://api.openalex.org/sources/issn:1087-0156"
   },
   {
@@ -796,7 +796,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2024; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S106963461",
     "oaWorksCount": 170,
-    "citedByCount": 10378,
+    "citedByCount": 10383,
     "apiUrl": "https://api.openalex.org/sources/issn:1087-0156"
   },
   {
@@ -816,7 +816,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2023; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S106963461",
     "oaWorksCount": 218,
-    "citedByCount": 30088,
+    "citedByCount": 30103,
     "apiUrl": "https://api.openalex.org/sources/issn:1087-0156"
   },
   {
@@ -836,7 +836,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2022; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S106963461",
     "oaWorksCount": 201,
-    "citedByCount": 31970,
+    "citedByCount": 31984,
     "apiUrl": "https://api.openalex.org/sources/issn:1087-0156"
   },
   {
@@ -856,7 +856,7 @@
     "scopeNote": "OpenAlex Source object works_count total; this is open metadata coverage and is not equivalent to WoS/JCR article counts.",
     "openAlexId": "https://openalex.org/S203256638",
     "homepageUrl": "http://www.nature.com/nm/index.html",
-    "citedByCount": 2532568,
+    "citedByCount": 2532835,
     "apiUrl": "https://api.openalex.org/sources/issn:1078-8956"
   },
   {
@@ -876,7 +876,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2026; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S203256638",
     "oaWorksCount": 158,
-    "citedByCount": 514,
+    "citedByCount": 520,
     "apiUrl": "https://api.openalex.org/sources/issn:1078-8956"
   },
   {
@@ -895,8 +895,8 @@
     "accessMode": "public",
     "scopeNote": "OpenAlex counts_by_year works_count for 2025; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S203256638",
-    "oaWorksCount": 406,
-    "citedByCount": 15177,
+    "oaWorksCount": 407,
+    "citedByCount": 15211,
     "apiUrl": "https://api.openalex.org/sources/issn:1078-8956"
   },
   {
@@ -916,7 +916,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2024; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S203256638",
     "oaWorksCount": 400,
-    "citedByCount": 32967,
+    "citedByCount": 32994,
     "apiUrl": "https://api.openalex.org/sources/issn:1078-8956"
   },
   {
@@ -936,7 +936,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2023; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S203256638",
     "oaWorksCount": 362,
-    "citedByCount": 45512,
+    "citedByCount": 45530,
     "apiUrl": "https://api.openalex.org/sources/issn:1078-8956"
   },
   {
@@ -956,7 +956,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2022; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S203256638",
     "oaWorksCount": 354,
-    "citedByCount": 66401,
+    "citedByCount": 66424,
     "apiUrl": "https://api.openalex.org/sources/issn:1078-8956"
   },
   {
@@ -967,7 +967,7 @@
     "journalTitle": "New England Journal of Medicine",
     "issn": "0028-4793",
     "metric": "openalex_works_count_total",
-    "value": 190256,
+    "value": 190259,
     "asOfDate": "2026-05-24",
     "source": "OpenAlex",
     "url": "https://openalex.org/S62468778",
@@ -976,7 +976,7 @@
     "scopeNote": "OpenAlex Source object works_count total; this is open metadata coverage and is not equivalent to WoS/JCR article counts.",
     "openAlexId": "https://openalex.org/S62468778",
     "homepageUrl": "http://www.nejm.org/",
-    "citedByCount": 12278644,
+    "citedByCount": 12279321,
     "apiUrl": "https://api.openalex.org/sources/issn:0028-4793"
   },
   {
@@ -987,7 +987,7 @@
     "journalTitle": "New England Journal of Medicine",
     "issn": "0028-4793",
     "metric": "openalex_works_count_by_year",
-    "value": 399,
+    "value": 402,
     "year": 2026,
     "source": "OpenAlex",
     "url": "https://openalex.org/S62468778",
@@ -996,7 +996,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2026; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S62468778",
     "oaWorksCount": 27,
-    "citedByCount": 362,
+    "citedByCount": 363,
     "apiUrl": "https://api.openalex.org/sources/issn:0028-4793"
   },
   {
@@ -1015,8 +1015,8 @@
     "accessMode": "public",
     "scopeNote": "OpenAlex counts_by_year works_count for 2025; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S62468778",
-    "oaWorksCount": 139,
-    "citedByCount": 14866,
+    "oaWorksCount": 140,
+    "citedByCount": 14890,
     "apiUrl": "https://api.openalex.org/sources/issn:0028-4793"
   },
   {
@@ -1036,7 +1036,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2024; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S62468778",
     "oaWorksCount": 229,
-    "citedByCount": 50970,
+    "citedByCount": 51004,
     "apiUrl": "https://api.openalex.org/sources/issn:0028-4793"
   },
   {
@@ -1056,7 +1056,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2023; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S62468778",
     "oaWorksCount": 312,
-    "citedByCount": 78020,
+    "citedByCount": 78061,
     "apiUrl": "https://api.openalex.org/sources/issn:0028-4793"
   },
   {
@@ -1076,7 +1076,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2022; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S62468778",
     "oaWorksCount": 463,
-    "citedByCount": 118178,
+    "citedByCount": 118216,
     "apiUrl": "https://api.openalex.org/sources/issn:0028-4793"
   },
   {
@@ -1096,7 +1096,7 @@
     "scopeNote": "OpenAlex Source object works_count total; this is open metadata coverage and is not equivalent to WoS/JCR article counts.",
     "openAlexId": "https://openalex.org/S125754415",
     "homepageUrl": "http://www.pnas.org/",
-    "citedByCount": 22733084,
+    "citedByCount": 22734948,
     "apiUrl": "https://api.openalex.org/sources/issn:0027-8424"
   },
   {
@@ -1107,7 +1107,7 @@
     "journalTitle": "Proceedings of the National Academy of Sciences",
     "issn": "0027-8424",
     "metric": "openalex_works_count_by_year",
-    "value": 1853,
+    "value": 1854,
     "year": 2026,
     "source": "OpenAlex",
     "url": "https://openalex.org/S125754415",
@@ -1115,8 +1115,8 @@
     "accessMode": "public",
     "scopeNote": "OpenAlex counts_by_year works_count for 2026; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S125754415",
-    "oaWorksCount": 1812,
-    "citedByCount": 600,
+    "oaWorksCount": 1836,
+    "citedByCount": 605,
     "apiUrl": "https://api.openalex.org/sources/issn:0027-8424"
   },
   {
@@ -1127,7 +1127,7 @@
     "journalTitle": "Proceedings of the National Academy of Sciences",
     "issn": "0027-8424",
     "metric": "openalex_works_count_by_year",
-    "value": 4424,
+    "value": 4423,
     "year": 2025,
     "source": "OpenAlex",
     "url": "https://openalex.org/S125754415",
@@ -1136,7 +1136,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2025; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S125754415",
     "oaWorksCount": 4421,
-    "citedByCount": 18398,
+    "citedByCount": 18451,
     "apiUrl": "https://api.openalex.org/sources/issn:0027-8424"
   },
   {
@@ -1156,7 +1156,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2024; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S125754415",
     "oaWorksCount": 3956,
-    "citedByCount": 58207,
+    "citedByCount": 58258,
     "apiUrl": "https://api.openalex.org/sources/issn:0027-8424"
   },
   {
@@ -1176,7 +1176,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2023; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S125754415",
     "oaWorksCount": 3624,
-    "citedByCount": 96352,
+    "citedByCount": 96397,
     "apiUrl": "https://api.openalex.org/sources/issn:0027-8424"
   },
   {
@@ -1196,7 +1196,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2022; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S125754415",
     "oaWorksCount": 3931,
-    "citedByCount": 146260,
+    "citedByCount": 146315,
     "apiUrl": "https://api.openalex.org/sources/issn:0027-8424"
   },
   {
@@ -1216,7 +1216,7 @@
     "scopeNote": "OpenAlex Source object works_count total; this is open metadata coverage and is not equivalent to WoS/JCR article counts.",
     "openAlexId": "https://openalex.org/S3880285",
     "homepageUrl": "http://www.sciencemag.org/",
-    "citedByCount": 22595415,
+    "citedByCount": 22597411,
     "apiUrl": "https://api.openalex.org/sources/issn:0036-8075"
   },
   {
@@ -1236,7 +1236,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2026; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S3880285",
     "oaWorksCount": 114,
-    "citedByCount": 814,
+    "citedByCount": 822,
     "apiUrl": "https://api.openalex.org/sources/issn:0036-8075"
   },
   {
@@ -1256,7 +1256,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2025; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S3880285",
     "oaWorksCount": 514,
-    "citedByCount": 23031,
+    "citedByCount": 23082,
     "apiUrl": "https://api.openalex.org/sources/issn:0036-8075"
   },
   {
@@ -1276,7 +1276,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2024; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S3880285",
     "oaWorksCount": 674,
-    "citedByCount": 65832,
+    "citedByCount": 65885,
     "apiUrl": "https://api.openalex.org/sources/issn:0036-8075"
   },
   {
@@ -1296,7 +1296,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2023; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S3880285",
     "oaWorksCount": 608,
-    "citedByCount": 112479,
+    "citedByCount": 112532,
     "apiUrl": "https://api.openalex.org/sources/issn:0036-8075"
   },
   {
@@ -1316,7 +1316,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2022; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S3880285",
     "oaWorksCount": 671,
-    "citedByCount": 166284,
+    "citedByCount": 166350,
     "apiUrl": "https://api.openalex.org/sources/issn:0036-8075"
   },
   {
@@ -1336,7 +1336,7 @@
     "scopeNote": "OpenAlex Source object works_count total; this is open metadata coverage and is not equivalent to WoS/JCR article counts.",
     "openAlexId": "https://openalex.org/S49861241",
     "homepageUrl": "https://www.sciencedirect.com/journal/the-lancet",
-    "citedByCount": 10303016,
+    "citedByCount": 10303541,
     "apiUrl": "https://api.openalex.org/sources/issn:0140-6736"
   },
   {
@@ -1355,7 +1355,7 @@
     "accessMode": "public",
     "scopeNote": "OpenAlex counts_by_year works_count for 2026; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S49861241",
-    "oaWorksCount": 88,
+    "oaWorksCount": 89,
     "citedByCount": 334,
     "apiUrl": "https://api.openalex.org/sources/issn:0140-6736"
   },
@@ -1376,7 +1376,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2025; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S49861241",
     "oaWorksCount": 507,
-    "citedByCount": 14124,
+    "citedByCount": 14152,
     "apiUrl": "https://api.openalex.org/sources/issn:0140-6736"
   },
   {
@@ -1396,7 +1396,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2024; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S49861241",
     "oaWorksCount": 565,
-    "citedByCount": 52503,
+    "citedByCount": 52529,
     "apiUrl": "https://api.openalex.org/sources/issn:0140-6736"
   },
   {
@@ -1416,7 +1416,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2023; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S49861241",
     "oaWorksCount": 842,
-    "citedByCount": 60743,
+    "citedByCount": 60776,
     "apiUrl": "https://api.openalex.org/sources/issn:0140-6736"
   },
   {
@@ -1436,7 +1436,7 @@
     "scopeNote": "OpenAlex counts_by_year works_count for 2022; coverage may lag publisher sites and differs from WoS/JCR counting rules.",
     "openAlexId": "https://openalex.org/S49861241",
     "oaWorksCount": 705,
-    "citedByCount": 101306,
+    "citedByCount": 101340,
     "apiUrl": "https://api.openalex.org/sources/issn:0140-6736"
   }
 ]

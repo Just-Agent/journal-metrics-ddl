@@ -6,6 +6,7 @@
   "scripts": {
     "crawl": "node scripts/crawl-sources.mjs",
     "import:cas-history": "node scripts/import-cas-history.mjs",
+    "import:jcr-history": "node scripts/import-jcr-history.mjs",
     "validate": "node scripts/validate-data.mjs",
     "link-check": "node scripts/link-check.mjs"
   }
