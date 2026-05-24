@@ -444,7 +444,7 @@
         background: linear-gradient(90deg, var(--teal), var(--blue));
       }
 
-      .note {
+      .public-disclaimer {
         margin: 26px 0 48px;
         padding: 18px 20px;
         border: 1px solid #fed7aa;
@@ -565,7 +565,7 @@
         <div class="journal-grid" id="journalGrid"></div>
       </section>
 
-      <p class="note">
+      <p class="public-disclaimer">
         数据口径提醒：中科院分区详细表和单刊影响因子历史通常依赖机构授权或登录系统。公开仓库只记录官方发布时间、公开说明、合规导入占位和 OpenAlex/Crossref 等开放元数据。
       </p>
     </main>
@@ -738,7 +738,8 @@
       }
 
       main().catch((error) => {
-        document.querySelector("main").insertAdjacentHTML("afterbegin", `<p class="note">数据加载失败：${error.message}</p>`);
+        console.error(error);
+        document.querySelector("main").insertAdjacentHTML("afterbegin", `<p class="public-disclaimer">数据暂时加载失败，请稍后刷新。</p>`);
       });
     </script>
   </body>

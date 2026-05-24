@@ -117,6 +117,25 @@ function validateMetric(metric, topicId, file, index) {
   scan(metric, label);
 }
 
+function validatePublicPage() {
+  const pageFile = new URL("../index.html", import.meta.url);
+  if (!fs.existsSync(pageFile)) return;
+  const html = fs.readFileSync(pageFile, "utf8");
+  const blockedPatterns = [
+    {
+      pattern: /\$\{[^}]*\.(?:licenseNote|sampleNote|coverageNote|scopeNote|parser|accessMode|forecastBasis)[^}]*\}/,
+      message: "index.html directly renders developer-only data fields"
+    },
+    {
+      pattern: /\$\{[^}]*error\.message[^}]*\}/,
+      message: "index.html directly renders raw error.message"
+    }
+  ];
+  for (const { pattern, message } of blockedPatterns) {
+    if (pattern.test(html)) errors.push(message);
+  }
+}
+
 for (const dirent of fs.readdirSync(root, { withFileTypes: true })) {
   if (!dirent.isDirectory()) continue;
   const topicId = dirent.name;
@@ -150,6 +169,7 @@ for (const dirent of fs.readdirSync(root, { withFileTypes: true })) {
 }
 
 if (itemCount === 0) errors.push("no items found");
+validatePublicPage();
 
 if (errors.length) {
   console.error(errors.join("\n"));
