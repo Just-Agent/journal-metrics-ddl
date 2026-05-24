@@ -415,6 +415,41 @@
         font-weight: 800;
       }
 
+      .journal-trend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        margin-top: 14px;
+      }
+
+      .trend-chip {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        padding: 0 10px;
+        border-radius: 999px;
+        background: #e0f2fe;
+        color: #0369a1;
+        font-size: 13px;
+        font-weight: 950;
+      }
+
+      .trend-chip.up {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      .trend-chip.down {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .trend-chip.flat {
+        background: #f1f5f9;
+        color: #334155;
+      }
+
       .bars {
         display: grid;
         gap: 10px;
@@ -559,7 +594,7 @@
           <div>
             <span class="pill">OpenAlex Snapshot</span>
             <h2>期刊发文量快照</h2>
-            <p>首批 watchlist 使用 Nature、Science、Cell，展示 OpenAlex 的 total works_count 与近年 counts_by_year。该口径不是 WoS/JCR 精确统计。</p>
+            <p>首批 watchlist 扩展到综合、医学、计算机和生物信息学代表期刊，展示 OpenAlex 的 total works_count、近年 counts_by_year 和最新完整年同比趋势。该口径不是 WoS/JCR 精确统计。</p>
           </div>
         </div>
         <div class="journal-grid" id="journalGrid"></div>
@@ -604,6 +639,23 @@
       function daysUntil(value) {
         const diff = new Date(value).getTime() - Date.now();
         return Math.ceil(diff / 86400000);
+      }
+
+      function trendFor(yearly) {
+        const currentYear = new Date().getFullYear();
+        const completeRows = yearly.filter((row) => Number(row.year) < currentYear);
+        const latest = completeRows[0];
+        const previous = completeRows[1];
+        if (!latest || !previous || !Number(previous.value)) return null;
+        const change = (Number(latest.value) - Number(previous.value)) / Number(previous.value);
+        const percent = `${change >= 0 ? "+" : ""}${Math.round(change * 100)}%`;
+        const kind = change > 0.05 ? "up" : change < -0.05 ? "down" : "flat";
+        const label = kind === "up" ? "扩张" : kind === "down" ? "收缩" : "基本持平";
+        return {
+          kind,
+          text: `${latest.year} vs ${previous.year} ${percent}`,
+          label
+        };
       }
 
       function renderStats(items, metrics) {
@@ -697,6 +749,7 @@
             .sort((a, b) => Number(b.year) - Number(a.year));
           const max = Math.max(...yearly.map((row) => Number(row.value)), 1);
           const title = total?.journalTitle || rows[0]?.journalTitle || journalId;
+          const trend = trendFor(yearly);
           const coverClass = journalId.includes("science") ? "science" : journalId.includes("cell") ? "cell" : "";
           return `
             <article class="journal-card">
@@ -707,6 +760,12 @@
               <div class="journal-body">
                 <div class="big-number">${formatNumber(total?.value || 0)}</div>
                 <div class="small-label">OpenAlex total works_count</div>
+                ${trend ? `
+                  <div class="journal-trend">
+                    <span class="trend-chip ${trend.kind}">${trend.label}</span>
+                    <span class="small-label">${trend.text}</span>
+                  </div>
+                ` : ""}
                 <div class="bars">
                   ${yearly.map((row) => `
                     <div class="bar-row">

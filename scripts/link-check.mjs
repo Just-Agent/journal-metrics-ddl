@@ -58,7 +58,11 @@ for (const dirent of fs.readdirSync(root, { withFileTypes: true })) {
     for (const record of array) {
       if (record.accessMode && record.accessMode !== "public") continue;
       if (record.linkCheckMode === "manual_verified" || record.linkCheckMode === "skip") continue;
+      if (record.source === "OpenAlex" && record.apiUrl) {
+        addLink(record.apiUrl, `${topicId}:${record.id || record.name}.apiUrl`);
+      }
       for (const key of ["url", "sourceUrl"]) {
+        if (record.source === "OpenAlex" && key === "url" && record.apiUrl) continue;
         if (record[key]) addLink(record[key], `${topicId}:${record.id || record.name}.${key}`);
       }
     }

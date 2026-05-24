@@ -13,5 +13,50 @@
     "id": "cell",
     "title": "Cell",
     "issn": "0092-8674"
+  },
+  {
+    "id": "nejm",
+    "title": "New England Journal of Medicine",
+    "issn": "0028-4793"
+  },
+  {
+    "id": "lancet",
+    "title": "The Lancet",
+    "issn": "0140-6736"
+  },
+  {
+    "id": "jama",
+    "title": "JAMA",
+    "issn": "0098-7484"
+  },
+  {
+    "id": "bmj",
+    "title": "BMJ",
+    "issn": "1756-1833"
+  },
+  {
+    "id": "pnas",
+    "title": "Proceedings of the National Academy of Sciences",
+    "issn": "0027-8424"
+  },
+  {
+    "id": "tpami",
+    "title": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+    "issn": "0162-8828"
+  },
+  {
+    "id": "nature-medicine",
+    "title": "Nature Medicine",
+    "issn": "1078-8956"
+  },
+  {
+    "id": "nature-biotechnology",
+    "title": "Nature Biotechnology",
+    "issn": "1087-0156"
+  },
+  {
+    "id": "bioinformatics",
+    "title": "Bioinformatics",
+    "issn": "1367-4811"
   }
 ]
