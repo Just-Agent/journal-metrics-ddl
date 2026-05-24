@@ -299,11 +299,50 @@
       "jcr-2024-release",
       "jcr-2025-release"
     ],
+  "estimatedNextWindow": {
+    "start": "2026-06-18",
+    "end": "2026-06-30"
+  },
+  "releaseCadence": {
+    "algorithmVersion": "just-ddl-seasonal-window-v1",
+    "sampleSize": 5,
+    "basisEvents": [
+      "jcr-2021-release",
+      "jcr-2022-release",
+      "jcr-2023-release",
+      "jcr-2024-release",
+      "jcr-2025-release"
+    ],
+    "dates": [
+      "2021-06-30",
+      "2022-06-28",
+      "2023-06-28",
+      "2024-06-20",
+      "2025-06-18"
+    ],
+    "intervals": [
+      363,
+      365,
+      358,
+      363
+    ],
+    "medianDays": 363,
+    "meanDays": 362,
+    "minDays": 358,
+    "maxDays": 365,
+    "rollForwardCount": 0,
+    "windowRule": {
+      "type": "annual_observation_window",
+      "targetYear": 2026,
+      "startMonthDay": "06-18",
+      "endMonthDay": "06-30"
+    },
     "estimatedNextWindow": {
       "start": "2026-06-18",
       "end": "2026-06-30"
-    },
-    "forecastBasis": "2021-2025 年 Clarivate JCR 均在 6 月下旬发布；2026 实际发布时间仍以 Clarivate 官方发布为准。",
+    }
+  },
+  "forecastBasis": "2021-2025 年 Clarivate JCR 均在 6 月下旬发布；2026 实际发布时间仍以 Clarivate 官方发布为准。",
     "confidence": "high",
     "url": "https://clarivate.com/academia-government/scientific-and-academic-research/research-funding-analytics/journal-citation-reports/",
     "source": "Clarivate",
@@ -337,11 +376,50 @@
       "jcr-2024-correction-record",
       "jcr-2025-correction-record"
     ],
+  "estimatedNextWindow": {
+    "start": "2026-10-15",
+    "end": "2026-10-31"
+  },
+  "releaseCadence": {
+    "algorithmVersion": "just-ddl-seasonal-window-v1",
+    "sampleSize": 5,
+    "basisEvents": [
+      "jcr-2021-correction-record",
+      "jcr-2022-correction-record",
+      "jcr-2023-correction-record",
+      "jcr-2024-correction-record",
+      "jcr-2025-correction-record"
+    ],
+    "dates": [
+      "2021-10-25",
+      "2022-10-19",
+      "2023-10-18",
+      "2024-10-23",
+      "2025-10-15"
+    ],
+    "intervals": [
+      359,
+      364,
+      371,
+      357
+    ],
+    "medianDays": 362,
+    "meanDays": 363,
+    "minDays": 357,
+    "maxDays": 371,
+    "rollForwardCount": 0,
+    "windowRule": {
+      "type": "annual_observation_window",
+      "targetYear": 2026,
+      "startMonthDay": "10-15",
+      "endMonthDay": "10-31"
+    },
     "estimatedNextWindow": {
       "start": "2026-10-15",
       "end": "2026-10-31"
-    },
-    "forecastBasis": "2021-2025 年 JCR Help Center 均在 10 月记录 Data Reload 或修正节点；该窗口是观察提醒，不代表 Clarivate 固定承诺。",
+    }
+  },
+  "forecastBasis": "2021-2025 年 JCR Help Center 均在 10 月记录 Data Reload 或修正节点；该窗口是观察提醒，不代表 Clarivate 固定承诺。",
     "confidence": "medium",
     "url": "https://journalcitationreports.zendesk.com/hc/en-gb/sections/201245195-Journal-Citation-Reports",
     "source": "Clarivate JCR Help Center",
@@ -355,6 +433,6 @@
       "修正观察",
       "reload"
     ],
-    "description": "用于提醒维护链路检查 JCR 官方支持页是否出现 reload 或 correction，不显示为正式 DDL。"
-  }
+  "description": "用于提醒用户关注 JCR 官方支持页是否出现 reload 或 correction；这不是 Clarivate 固定承诺，也不进入正式 DDL 统计。"
+}
 ]

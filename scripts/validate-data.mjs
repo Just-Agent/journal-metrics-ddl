@@ -69,7 +69,7 @@ function validateItem(item, topicId, file, index) {
   }
 
   if (item.type === "forecastWindow") {
-    requireFields(item, ["isDatePlaceholder", "lastOfficialDate", "basisEvents", "estimatedNextWindow", "forecastBasis", "confidence"], label);
+    requireFields(item, ["isDatePlaceholder", "lastOfficialDate", "basisEvents", "estimatedNextWindow", "forecastBasis", "confidence", "releaseCadence"], label);
     if (item.isDatePlaceholder !== true) errors.push(`${label} forecastWindow must set isDatePlaceholder true`);
     if (item.lastOfficialDate) assertDate(item.lastOfficialDate, `${label}.lastOfficialDate`);
     if (!Array.isArray(item.basisEvents) || item.basisEvents.length === 0) errors.push(`${label} must include basisEvents`);

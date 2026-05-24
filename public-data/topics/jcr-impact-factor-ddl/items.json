@@ -345,6 +345,6 @@
       "修正观察",
       "reload"
     ],
-    "description": "用于提醒维护链路检查 JCR 官方支持页是否出现 reload 或 correction，不显示为正式 DDL。"
+    "description": "用于提醒用户关注 JCR 官方支持页是否出现 reload 或 correction；这不是 Clarivate 固定承诺，也不进入正式 DDL 统计。"
   }
 ]
