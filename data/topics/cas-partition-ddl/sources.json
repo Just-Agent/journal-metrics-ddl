@@ -1,0 +1,27 @@
+{
+  "topicId": "cas-partition-ddl",
+  "sourceFamilies": [
+    {
+      "id": "cas-las-statement",
+      "name": "中国科学院文献情报中心通知公告",
+      "url": "https://www.las.cas.cn/news/tzgg/202603/t20260327_8178738.html",
+      "type": "official",
+      "accessMode": "public",
+      "parser": "cas-las-statement",
+      "markers": ["不再更新", "期刊分区表", "声明"],
+      "refreshCadence": "manual",
+      "coverageNote": "用于确认 2026 起停更和官方授权边界。"
+    },
+    {
+      "id": "cas-partition-platform",
+      "name": "中科院期刊分区表在线平台",
+      "url": "https://www.fenqubiao.com/",
+      "type": "official-platform",
+      "accessMode": "manual_verified",
+      "parser": "licensed-or-institutional-access",
+      "markers": ["期刊分区表", "查询"],
+      "refreshCadence": "manual",
+      "coverageNote": "详细期刊分区数据涉及平台访问、机构授权或历史数据导入，不在公开 crawler 中绕过权限抓取。"
+    }
+  ]
+}

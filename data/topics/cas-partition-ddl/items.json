@@ -1,0 +1,34 @@
+[
+  {
+    "id": "cas-partition-2026-stop-update-statement",
+    "topicId": "cas-partition-ddl",
+    "title": "中科院文献情报中心声明：2026 年起不再更新发布期刊分区表",
+    "type": "historyEvent",
+    "date": "2026-03-27",
+    "url": "https://www.las.cas.cn/news/tzgg/202603/t20260327_8178738.html",
+    "source": "中国科学院文献情报中心",
+    "sourceUrl": "https://www.las.cas.cn/news/tzgg/202603/t20260327_8178738.html",
+    "stage": "Official statement",
+    "category": "期刊评价",
+    "subtopic": "cas-policy",
+    "subtopicName": "官方声明",
+    "tags": ["CAS", "期刊分区", "停更"],
+    "description": "官方声明明确自 2026 年起不再更新与发布期刊分区表，任何其他机构发布的期刊分区表均与文献中心无关。"
+  },
+  {
+    "id": "cas-partition-history-data-policy",
+    "topicId": "cas-partition-ddl",
+    "title": "中科院期刊分区历史数据查询与授权边界",
+    "type": "historyEvent",
+    "date": "2026-03-27",
+    "url": "https://www.fenqubiao.com/",
+    "source": "中科院期刊分区表在线平台",
+    "sourceUrl": "https://www.las.cas.cn/news/tzgg/202603/t20260327_8178738.html",
+    "stage": "Access boundary",
+    "category": "期刊评价",
+    "subtopic": "cas-access",
+    "subtopicName": "历史数据",
+    "tags": ["CAS", "历史轨迹", "授权数据"],
+    "description": "公开仓库只记录官方平台与官方声明；具体期刊历年分区变化需通过机构授权、历史数据查询或合规导入维护。"
+  }
+]

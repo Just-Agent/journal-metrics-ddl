@@ -1,0 +1,39 @@
+{
+  "topicId": "jcr-impact-factor-ddl",
+  "sourceFamilies": [
+    {
+      "id": "clarivate-jcr-news",
+      "name": "Clarivate JCR News",
+      "url": "https://clarivate.com/news/clarivate-unveils-the-2025-journal-citation-reports/",
+      "type": "official",
+      "accessMode": "public",
+      "parser": "clarivate-news-release",
+      "markers": ["Journal Citation Reports", "JCR", "released"],
+      "refreshCadence": "weekly",
+      "coverageNote": "用于追踪 JCR 年度官方发布时间和公开发布说明。"
+    },
+    {
+      "id": "clarivate-jcr-support",
+      "name": "Clarivate JCR Support",
+      "url": "https://journalcitationreports.zendesk.com/",
+      "type": "official-support",
+      "accessMode": "public",
+      "parser": "jcr-support-corrections",
+      "markers": ["JCR data", "correct metrics", "release"],
+      "refreshCadence": "monthly",
+      "coverageNote": "用于追踪 JCR 发布后的官方更正、补充材料和数据 reload 说明。"
+    },
+    {
+      "id": "jcr-licensed-data",
+      "name": "Journal Citation Reports Licensed Data",
+      "url": "https://clarivate.com/academia-government/scientific-and-academic-research/research-funding-analytics/journal-citation-reports/",
+      "type": "licensed-database",
+      "accessMode": "licensed_import",
+      "licenseNote": "单刊影响因子、quartile 和完整 JCR 明细数据需要机构订阅或授权导入。",
+      "parser": "licensed-import",
+      "markers": ["Journal Impact Factor", "quartile", "JCR"],
+      "refreshCadence": "annual",
+      "coverageNote": "公开仓库不绕过权限抓取 JCR 明细；后续可支持授权 CSV 导入。"
+    }
+  ]
+}

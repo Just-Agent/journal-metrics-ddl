@@ -1,0 +1,80 @@
+{
+  "generatedAt": "2026-05-24T00:24:27.899Z",
+  "mode": "journal-metrics-source-crawl",
+  "topics": [
+    {
+      "topicId": "cas-partition-ddl",
+      "sources": [
+        {
+          "id": "cas-las-statement",
+          "url": "https://www.las.cas.cn/news/tzgg/202603/t20260327_8178738.html",
+          "parser": "cas-las-statement",
+          "accessMode": "public",
+          "status": "reachable",
+          "httpStatus": 200
+        },
+        {
+          "id": "cas-partition-platform",
+          "url": "https://www.fenqubiao.com/",
+          "parser": "licensed-or-institutional-access",
+          "accessMode": "manual_verified",
+          "status": "manual_or_authorized_source"
+        }
+      ]
+    },
+    {
+      "topicId": "jcr-impact-factor-ddl",
+      "sources": [
+        {
+          "id": "clarivate-jcr-news",
+          "url": "https://clarivate.com/news/clarivate-unveils-the-2025-journal-citation-reports/",
+          "parser": "clarivate-news-release",
+          "accessMode": "public",
+          "status": "reachable",
+          "httpStatus": 200
+        },
+        {
+          "id": "clarivate-jcr-support",
+          "url": "https://journalcitationreports.zendesk.com/",
+          "parser": "jcr-support-corrections",
+          "accessMode": "public",
+          "status": "http_error",
+          "httpStatus": 403
+        },
+        {
+          "id": "jcr-licensed-data",
+          "url": "https://clarivate.com/academia-government/scientific-and-academic-research/research-funding-analytics/journal-citation-reports/",
+          "parser": "licensed-import",
+          "accessMode": "licensed_import",
+          "status": "manual_or_authorized_source"
+        }
+      ]
+    },
+    {
+      "topicId": "journal-volume-ddl",
+      "sources": [
+        {
+          "id": "openalex-sources",
+          "url": "https://docs.openalex.org/api-entities/sources/source-object",
+          "parser": "openalex-source-object",
+          "accessMode": "public",
+          "status": "reachable",
+          "httpStatus": 200
+        },
+        {
+          "id": "crossref-rest-api",
+          "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+          "parser": "crossref-issn-works-count",
+          "accessMode": "public",
+          "status": "reachable",
+          "httpStatus": 200
+        }
+      ]
+    }
+  ],
+  "openAlex": {
+    "requested": 3,
+    "writtenMetrics": 18,
+    "failures": []
+  }
+}

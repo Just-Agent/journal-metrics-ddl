@@ -1,0 +1,15 @@
+[
+  {
+    "id": "cas-partition-authorized-history-placeholder",
+    "topicId": "cas-partition-ddl",
+    "type": "metricSnapshot",
+    "metric": "cas_partition_history_import",
+    "value": "licensed_import_required",
+    "asOfDate": "2026-05-24",
+    "source": "中科院期刊分区表在线平台",
+    "url": "https://www.fenqubiao.com/",
+    "accessMode": "licensed_import",
+    "licenseNote": "具体期刊历年分区数据需通过有权限的机构账号或授权导入，不在公开仓库中抓取。",
+    "scopeNote": "用于后续按期刊 ISSN 维护历年大类/小类分区轨迹。"
+  }
+]

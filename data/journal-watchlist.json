@@ -1,0 +1,17 @@
+[
+  {
+    "id": "nature",
+    "title": "Nature",
+    "issn": "0028-0836"
+  },
+  {
+    "id": "science",
+    "title": "Science",
+    "issn": "0036-8075"
+  },
+  {
+    "id": "cell",
+    "title": "Cell",
+    "issn": "0092-8674"
+  }
+]

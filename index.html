@@ -1,0 +1,745 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Journal Metrics DDL</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #07152f;
+        --muted: #53647f;
+        --line: #d9e4f2;
+        --surface: #ffffff;
+        --soft: #f5f8fc;
+        --blue: #0ea5e9;
+        --teal: #0f766e;
+        --green: #16a34a;
+        --orange: #f97316;
+        --violet: #7c3aed;
+        --shadow: 0 18px 45px rgba(16, 24, 40, 0.09);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", "Microsoft YaHei", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 20% 0%, rgba(14, 165, 233, 0.16), transparent 34rem),
+          radial-gradient(circle at 86% 10%, rgba(249, 115, 22, 0.14), transparent 32rem),
+          #f6f9fd;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .shell {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 1px solid rgba(217, 228, 242, 0.9);
+        background: rgba(255, 255, 255, 0.84);
+        backdrop-filter: blur(16px);
+      }
+
+      .topbar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 70px;
+        gap: 16px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 900;
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 38px;
+        height: 38px;
+        place-items: center;
+        border-radius: 14px;
+        color: #fff;
+        background: linear-gradient(135deg, var(--teal), var(--blue));
+        box-shadow: 0 12px 24px rgba(14, 165, 233, 0.22);
+      }
+
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+
+      .nav a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 38px;
+        padding: 0 14px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #fff;
+        color: #334155;
+        font-weight: 800;
+        font-size: 14px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+        gap: 28px;
+        align-items: stretch;
+        padding: 58px 0 32px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        width: fit-content;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 13px;
+        border-radius: 999px;
+        color: #0f766e;
+        background: rgba(15, 118, 110, 0.1);
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 20px 0 14px;
+        font-size: clamp(44px, 6vw, 78px);
+        line-height: 0.95;
+        letter-spacing: 0;
+      }
+
+      .lead {
+        max-width: 760px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 20px;
+        line-height: 1.8;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 26px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        gap: 8px;
+        padding: 0 18px;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        background: #fff;
+        color: var(--ink);
+        font-weight: 900;
+      }
+
+      .button.primary {
+        border-color: transparent;
+        color: #fff;
+        background: linear-gradient(135deg, var(--teal), var(--blue));
+      }
+
+      .board {
+        border: 1px solid rgba(15, 118, 110, 0.16);
+        border-radius: 28px;
+        background:
+          linear-gradient(135deg, rgba(15, 118, 110, 0.96), rgba(14, 165, 233, 0.82)),
+          #0f766e;
+        color: #fff;
+        padding: 22px;
+        box-shadow: var(--shadow);
+      }
+
+      .board h2 {
+        margin: 0 0 10px;
+        font-size: 25px;
+      }
+
+      .board p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.78);
+        line-height: 1.7;
+      }
+
+      .mini-metrics {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .mini-metric {
+        min-height: 92px;
+        padding: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 18px;
+        background: rgba(7, 21, 47, 0.18);
+      }
+
+      .mini-metric strong {
+        display: block;
+        font-size: 30px;
+        line-height: 1;
+      }
+
+      .mini-metric span {
+        display: block;
+        margin-top: 8px;
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .section {
+        padding: 28px 0;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 18px;
+      }
+
+      .section-head h2 {
+        margin: 0;
+        font-size: 30px;
+      }
+
+      .section-head p {
+        max-width: 720px;
+        margin: 8px 0 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        padding: 0 10px;
+        border-radius: 999px;
+        background: #eef8ff;
+        color: #0369a1;
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .card {
+        min-height: 232px;
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 10px 32px rgba(15, 23, 42, 0.06);
+      }
+
+      .card.featured {
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.88)),
+          var(--surface);
+      }
+
+      .card h3 {
+        margin: 12px 0 8px;
+        font-size: 22px;
+        line-height: 1.22;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .meta span {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 0 9px;
+        border-radius: 999px;
+        background: #f7efe8;
+        color: #7c2d12;
+        font-weight: 800;
+        font-size: 13px;
+      }
+
+      .timeline {
+        display: grid;
+        gap: 14px;
+      }
+
+      .row {
+        display: grid;
+        grid-template-columns: 150px minmax(0, 1fr) 180px;
+        gap: 16px;
+        align-items: center;
+        min-height: 104px;
+        padding: 18px 20px;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 8px 26px rgba(15, 23, 42, 0.05);
+      }
+
+      .date {
+        font-size: 16px;
+        font-weight: 900;
+        color: var(--teal);
+      }
+
+      .row h3 {
+        margin: 0 0 6px;
+        font-size: 20px;
+      }
+
+      .row p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .source-link {
+        justify-self: end;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0 14px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #fff;
+        color: #0f766e;
+        font-weight: 900;
+      }
+
+      .journal-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .journal-card {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 26px;
+        background: #fff;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+      }
+
+      .journal-cover {
+        min-height: 142px;
+        padding: 20px;
+        color: #fff;
+        background: linear-gradient(135deg, #0f766e, #0ea5e9);
+      }
+
+      .journal-cover.science {
+        background: linear-gradient(135deg, #7c3aed, #0ea5e9);
+      }
+
+      .journal-cover.cell {
+        background: linear-gradient(135deg, #f97316, #0f766e);
+      }
+
+      .journal-cover span {
+        display: block;
+        font-size: 13px;
+        font-weight: 900;
+        opacity: 0.8;
+        text-transform: uppercase;
+      }
+
+      .journal-cover strong {
+        display: block;
+        margin-top: 16px;
+        font-size: 32px;
+        line-height: 1.05;
+      }
+
+      .journal-body {
+        padding: 20px;
+      }
+
+      .big-number {
+        font-size: 34px;
+        font-weight: 950;
+        line-height: 1;
+      }
+
+      .small-label {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .bars {
+        display: grid;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .bar-row {
+        display: grid;
+        grid-template-columns: 48px minmax(0, 1fr) 54px;
+        gap: 10px;
+        align-items: center;
+        color: #53647f;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .track {
+        height: 10px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #ecf2f8;
+      }
+
+      .fill {
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--teal), var(--blue));
+      }
+
+      .note {
+        margin: 26px 0 48px;
+        padding: 18px 20px;
+        border: 1px solid #fed7aa;
+        border-radius: 20px;
+        background: #fff7ed;
+        color: #7c2d12;
+        line-height: 1.7;
+      }
+
+      @media (max-width: 920px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+
+        .grid,
+        .journal-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .row {
+          grid-template-columns: 1fr;
+        }
+
+        .source-link {
+          justify-self: start;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .shell {
+          width: min(100% - 22px, 1180px);
+        }
+
+        .topbar-inner,
+        .section-head {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        h1 {
+          font-size: 44px;
+        }
+
+        .lead {
+          font-size: 17px;
+        }
+
+        .mini-metrics {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="shell topbar-inner">
+        <a class="brand" href="./">
+          <span class="brand-mark">J</span>
+          <span>Journal Metrics DDL</span>
+        </a>
+        <nav class="nav" aria-label="Primary">
+          <a href="https://just-agent.github.io/just-ddl/">Just-DDL Hub</a>
+          <a href="https://github.com/Just-Agent/journal-metrics-ddl">GitHub</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Just-DDL Research Evaluation</div>
+          <h1>期刊评价与指标轨迹</h1>
+          <p class="lead">
+            追踪 JCR 年度发布、后续修正、中科院分区官方边界，以及开放元数据口径下的期刊发文量。这里把正式 DDL、历史节点、指标快照和预测窗口分开显示，避免把预测误当成官方日期。
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="data/topics/jcr-impact-factor-ddl/items.json">查看 JCR 数据</a>
+            <a class="button" href="data/topics/journal-volume-ddl/metrics.json">查看发文量快照</a>
+          </div>
+        </div>
+        <aside class="board" aria-label="Deployment board">
+          <h2>生产数据面板</h2>
+          <p>公开版只使用官方公告与开放元数据；CAS/JCR 明细需要授权导入，不绕过登录或许可边界。</p>
+          <div class="mini-metrics" id="stats"></div>
+        </aside>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <span class="pill">三条轨道</span>
+            <h2>用户真正关心的不是一个日期</h2>
+            <p>JCR 的发布时间、CAS 分区的历史边界、单刊发文量趋势都需要不同口径。这个专题族先把数据轨道做清楚，后续再接入授权 CSV 或更多开放 API。</p>
+          </div>
+        </div>
+        <div class="grid" id="railCards"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <span class="pill">历史与预测</span>
+            <h2>JCR / CAS 关键节点</h2>
+            <p>历史节点不会进入官方倒计时；预测窗口只作为维护和趋势提醒。</p>
+          </div>
+        </div>
+        <div class="timeline" id="timeline"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <span class="pill">OpenAlex Snapshot</span>
+            <h2>期刊发文量快照</h2>
+            <p>首批 watchlist 使用 Nature、Science、Cell，展示 OpenAlex 的 total works_count 与近年 counts_by_year。该口径不是 WoS/JCR 精确统计。</p>
+          </div>
+        </div>
+        <div class="journal-grid" id="journalGrid"></div>
+      </section>
+
+      <p class="note">
+        数据口径提醒：中科院分区详细表和单刊影响因子历史通常依赖机构授权或登录系统。公开仓库只记录官方发布时间、公开说明、合规导入占位和 OpenAlex/Crossref 等开放元数据。
+      </p>
+    </main>
+
+    <script type="module">
+      const topicIds = ["cas-partition-ddl", "jcr-impact-factor-ddl", "journal-volume-ddl"];
+
+      async function json(path) {
+        const response = await fetch(path);
+        if (!response.ok) throw new Error(`${path} ${response.status}`);
+        return response.json();
+      }
+
+      function formatDate(value) {
+        return new Intl.DateTimeFormat("zh-CN", { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(value));
+      }
+
+      function formatNumber(value) {
+        if (typeof value !== "number") return value;
+        return new Intl.NumberFormat("en-US").format(value);
+      }
+
+      function classify(item) {
+        if (item.type === "officialDeadline") return "官方节点";
+        if (item.type === "historyEvent") return "历史节点";
+        return "预测窗口";
+      }
+
+      function itemDate(item) {
+        if (item.deadline) return new Date(item.deadline);
+        if (item.date) return new Date(item.date);
+        if (item.estimatedNextWindow?.start) return new Date(item.estimatedNextWindow.start);
+        return new Date(0);
+      }
+
+      function daysUntil(value) {
+        const diff = new Date(value).getTime() - Date.now();
+        return Math.ceil(diff / 86400000);
+      }
+
+      function renderStats(items, metrics) {
+        const official = items.filter((item) => item.type === "officialDeadline").length;
+        const history = items.filter((item) => item.type === "historyEvent").length;
+        const forecast = items.filter((item) => item.type === "forecastWindow").length;
+        document.querySelector("#stats").innerHTML = [
+          [topicIds.length, "Hub 专题卡"],
+          [items.length, "节点记录"],
+          [metrics.length, "指标快照"],
+          [`${official}/${history}/${forecast}`, "官方/历史/预测"]
+        ].map(([value, label]) => `<div class="mini-metric"><strong>${value}</strong><span>${label}</span></div>`).join("");
+      }
+
+      function renderRails(items, metrics) {
+        const jcr = items.filter((item) => item.topicId === "jcr-impact-factor-ddl");
+        const cas = items.filter((item) => item.topicId === "cas-partition-ddl");
+        const volume = metrics.filter((metric) => metric.topicId === "journal-volume-ddl");
+        const cards = [
+          {
+            label: "JCR",
+            title: "年度发布与后续修正",
+            text: "记录 Clarivate 官方发布、支持页修正和授权导入边界。预测窗口单独展示，不当作官方发布时间。",
+            meta: [`${jcr.length} 条节点`, "Clarivate", "影响因子"]
+          },
+          {
+            label: "CAS",
+            title: "中科院分区历史边界",
+            text: "公开版记录官方平台、停更声明和授权导入策略；单刊历年分区轨迹需要合规数据源。",
+            meta: [`${cas.length} 条节点`, "分区轨迹", "授权数据"]
+          },
+          {
+            label: "Open Metadata",
+            title: "期刊发文量趋势",
+            text: "使用 OpenAlex Source object 的 works_count 和 counts_by_year，清楚标注与 WoS/JCR 口径不同。",
+            meta: [`${volume.length} 个快照`, "OpenAlex", "按 ISSN"]
+          }
+        ];
+
+        document.querySelector("#railCards").innerHTML = cards.map((card) => `
+          <article class="card featured">
+            <span class="pill">${card.label}</span>
+            <h3>${card.title}</h3>
+            <p>${card.text}</p>
+            <div class="meta">${card.meta.map((item) => `<span>${item}</span>`).join("")}</div>
+          </article>
+        `).join("");
+      }
+
+      function renderTimeline(items) {
+        const sorted = [...items]
+          .filter((item) => item.topicId !== "journal-volume-ddl")
+          .sort((a, b) => itemDate(b) - itemDate(a));
+        document.querySelector("#timeline").innerHTML = sorted.map((item) => {
+          const dateLabel = item.type === "forecastWindow"
+            ? `${formatDate(item.estimatedNextWindow.start)} - ${formatDate(item.estimatedNextWindow.end)}`
+            : formatDate(item.deadline || item.date);
+          const countdown = item.deadline ? `<span>${daysUntil(item.deadline)} 天后</span>` : "";
+          return `
+            <article class="row">
+              <div class="date">${dateLabel}</div>
+              <div>
+                <span class="pill">${classify(item)}</span>
+                <h3>${item.title}</h3>
+                <p>${item.description}</p>
+                <div class="meta">
+                  <span>${item.source}</span>
+                  <span>${item.subtopicName || item.subtopic}</span>
+                  ${countdown}
+                </div>
+              </div>
+              <a class="source-link" href="${item.url}" target="_blank" rel="noreferrer">官方来源</a>
+            </article>
+          `;
+        }).join("");
+      }
+
+      function renderJournals(metrics) {
+        const grouped = metrics
+          .filter((metric) => metric.topicId === "journal-volume-ddl")
+          .reduce((map, metric) => {
+            const key = metric.journalId || metric.journalTitle;
+            if (!map.has(key)) map.set(key, []);
+            map.get(key).push(metric);
+            return map;
+          }, new Map());
+        const cards = [...grouped.entries()].map(([journalId, rows]) => {
+          const total = rows.find((row) => row.metric === "openalex_works_count_total");
+          const yearly = rows
+            .filter((row) => row.metric === "openalex_works_count_by_year")
+            .sort((a, b) => Number(b.year) - Number(a.year));
+          const max = Math.max(...yearly.map((row) => Number(row.value)), 1);
+          const title = total?.journalTitle || rows[0]?.journalTitle || journalId;
+          const coverClass = journalId.includes("science") ? "science" : journalId.includes("cell") ? "cell" : "";
+          return `
+            <article class="journal-card">
+              <div class="journal-cover ${coverClass}">
+                <span>${rows[0]?.issn || "ISSN"}</span>
+                <strong>${title}</strong>
+              </div>
+              <div class="journal-body">
+                <div class="big-number">${formatNumber(total?.value || 0)}</div>
+                <div class="small-label">OpenAlex total works_count</div>
+                <div class="bars">
+                  ${yearly.map((row) => `
+                    <div class="bar-row">
+                      <span>${row.year}</span>
+                      <div class="track"><div class="fill" style="width:${Math.max(4, Math.round(Number(row.value) / max * 100))}%"></div></div>
+                      <span>${formatNumber(row.value)}</span>
+                    </div>
+                  `).join("")}
+                </div>
+              </div>
+            </article>
+          `;
+        });
+        document.querySelector("#journalGrid").innerHTML = cards.join("");
+      }
+
+      async function main() {
+        const topicBundles = await Promise.all(topicIds.map(async (topicId) => ({
+          topicId,
+          items: await json(`data/topics/${topicId}/items.json`),
+          metrics: await json(`data/topics/${topicId}/metrics.json`).catch(() => [])
+        })));
+        const items = topicBundles.flatMap((bundle) => bundle.items);
+        const metrics = topicBundles.flatMap((bundle) => bundle.metrics);
+        renderStats(items, metrics);
+        renderRails(items, metrics);
+        renderTimeline(items);
+        renderJournals(metrics);
+      }
+
+      main().catch((error) => {
+        document.querySelector("main").insertAdjacentHTML("afterbegin", `<p class="note">数据加载失败：${error.message}</p>`);
+      });
+    </script>
+  </body>
+</html>

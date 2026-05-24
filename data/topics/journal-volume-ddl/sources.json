@@ -1,0 +1,27 @@
+{
+  "topicId": "journal-volume-ddl",
+  "sourceFamilies": [
+    {
+      "id": "openalex-sources",
+      "name": "OpenAlex Sources API",
+      "url": "https://docs.openalex.org/api-entities/sources/source-object",
+      "type": "open-metadata",
+      "accessMode": "public",
+      "parser": "openalex-source-object",
+      "markers": ["works_count", "counts_by_year", "source"],
+      "refreshCadence": "weekly",
+      "coverageNote": "用于开放元数据口径下的 works_count 和 counts_by_year 统计。"
+    },
+    {
+      "id": "crossref-rest-api",
+      "name": "Crossref REST API",
+      "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+      "type": "open-metadata",
+      "accessMode": "public",
+      "parser": "crossref-issn-works-count",
+      "markers": ["works", "filter", "ISSN"],
+      "refreshCadence": "planned",
+      "coverageNote": "后续用于按 ISSN 和年份补充 Crossref 口径发文量，需与 OpenAlex/WoS 口径分开展示。"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+[
+  {
+    "id": "jcr-2025-total-journals",
+    "topicId": "jcr-impact-factor-ddl",
+    "type": "metricSnapshot",
+    "metric": "jcr_total_journals",
+    "value": 22249,
+    "year": 2025,
+    "source": "Clarivate",
+    "url": "https://clarivate.com/news/clarivate-unveils-the-2025-journal-citation-reports/",
+    "accessMode": "public",
+    "scopeNote": "Clarivate 2025 JCR public release highlight: total journals included in JCR."
+  },
+  {
+    "id": "jcr-2025-categories",
+    "topicId": "jcr-impact-factor-ddl",
+    "type": "metricSnapshot",
+    "metric": "jcr_categories",
+    "value": 254,
+    "year": 2025,
+    "source": "Clarivate",
+    "url": "https://clarivate.com/news/clarivate-unveils-the-2025-journal-citation-reports/",
+    "accessMode": "public",
+    "scopeNote": "Clarivate 2025 JCR public release highlight: JCR categories."
+  },
+  {
+    "id": "jcr-journal-impact-factor-import-placeholder",
+    "topicId": "jcr-impact-factor-ddl",
+    "type": "metricSnapshot",
+    "metric": "journal_impact_factor_history",
+    "value": "licensed_import_required",
+    "asOfDate": "2026-05-24",
+    "source": "Journal Citation Reports",
+    "url": "https://clarivate.com/academia-government/scientific-and-academic-research/research-funding-analytics/journal-citation-reports/",
+    "accessMode": "licensed_import",
+    "licenseNote": "单刊影响因子、JIF quartile 和历年明细需要机构授权导入，不在公开仓库抓取。",
+    "scopeNote": "后续用于按 ISSN 维护具体期刊的 IF / quartile 历年变化。"
+  }
+]
