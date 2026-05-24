@@ -729,8 +729,7 @@
       }
 
       function trendFor(yearly) {
-        const currentYear = new Date().getFullYear();
-        const completeRows = yearly.filter((row) => Number(row.year) < currentYear);
+        const completeRows = yearly.filter((row) => row.yearCompleteness !== "partial_ytd");
         const latest = completeRows[0];
         const previous = completeRows[1];
         if (!latest || !previous || !Number(previous.value)) return null;
@@ -743,6 +742,10 @@
           text: `${latest.year} vs ${previous.year} ${percent}`,
           label
         };
+      }
+
+      function yearLabel(row) {
+        return row.yearCompleteness === "partial_ytd" ? `${row.year} YTD` : row.year;
       }
 
       function renderStats(items, metrics) {
@@ -917,7 +920,7 @@
                 <div class="bars">
                   ${yearly.map((row) => `
                     <div class="bar-row">
-                      <span>${row.year}</span>
+                      <span>${yearLabel(row)}</span>
                       <div class="track"><div class="fill" style="width:${Math.max(4, Math.round(Number(row.value) / max * 100))}%"></div></div>
                       <span>${formatNumber(row.value)}</span>
                     </div>

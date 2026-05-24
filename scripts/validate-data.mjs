@@ -111,8 +111,22 @@ function validateMetric(metric, topicId, file, index) {
   if (metric.type !== "metricSnapshot") errors.push(`${label} type must be metricSnapshot`);
   if (!metric.year && !metric.asOfDate) errors.push(`${label} missing year or asOfDate`);
   if (metric.url) assertUrl(metric.url, `${label}.url`);
+  if (metric.asOfDate) assertDate(metric.asOfDate, `${label}.asOfDate`);
   if (["login_required", "licensed_import"].includes(metric.accessMode) && !metric.licenseNote) {
     errors.push(`${label} ${metric.accessMode} metric must include licenseNote`);
+  }
+  if (metric.metric === "openalex_works_count_by_year") {
+    requireFields(metric, ["yearCompleteness", "asOfDate"], label);
+    if (!["partial_ytd", "complete_observed"].includes(metric.yearCompleteness)) {
+      errors.push(`${label} invalid yearCompleteness ${metric.yearCompleteness}`);
+    }
+    const currentYear = new Date().getFullYear();
+    if (Number(metric.year) === currentYear && metric.yearCompleteness !== "partial_ytd") {
+      errors.push(`${label} current calendar year must be marked partial_ytd`);
+    }
+    if (Number(metric.year) < currentYear && metric.yearCompleteness !== "complete_observed") {
+      errors.push(`${label} completed calendar years must be marked complete_observed`);
+    }
   }
   if (metric.metric === "journal_impact_factor") {
     if (!Number.isFinite(Number(metric.value)) || Number(metric.value) < 0) errors.push(`${label} invalid Journal Impact Factor ${metric.value}`);

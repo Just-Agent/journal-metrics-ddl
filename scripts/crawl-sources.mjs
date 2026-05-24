@@ -107,7 +107,7 @@ function buildOpenAlexMetric({ journal, source, metric, value, year, asOfDate, s
     issn: journal.issn,
     metric,
     value,
-    ...(year ? { year } : { asOfDate }),
+    ...(year ? { year, asOfDate } : { asOfDate }),
     source: "OpenAlex",
     url: sourceUrlFromOpenAlex(source),
     sourceUrl: "https://docs.openalex.org/api-entities/sources/source-object",
@@ -158,8 +158,10 @@ async function crawlOpenAlexJournalVolume() {
           metric: "openalex_works_count_by_year",
           value: row.works_count,
           year,
+          asOfDate: report.generatedAt.slice(0, 10),
           scopeNote: `OpenAlex counts_by_year works_count for ${year}; coverage may lag publisher sites and differs from WoS/JCR counting rules.`,
           extra: {
+            yearCompleteness: year === currentYear ? "partial_ytd" : "complete_observed",
             oaWorksCount: row.oa_works_count ?? null,
             citedByCount: row.cited_by_count ?? null,
             apiUrl
