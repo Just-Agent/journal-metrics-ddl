@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-24T19:36:33.767Z",
+  "generatedAt": "2026-05-24T20:23:42.383Z",
   "mode": "journal-metrics-source-crawl",
   "topics": [
     {
@@ -73,8 +73,8 @@
     }
   ],
   "openAlex": {
-    "requested": 22,
-    "writtenMetrics": 127,
+    "requested": 42,
+    "writtenMetrics": 245,
     "failures": []
   }
 }

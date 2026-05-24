@@ -108,5 +108,105 @@
     "id": "tacl",
     "title": "Transactions of the Association for Computational Linguistics",
     "issn": "2307-387X"
+  },
+  {
+    "id": "nature-communications",
+    "title": "Nature Communications",
+    "issn": "2041-1723"
+  },
+  {
+    "id": "science-advances",
+    "title": "Science Advances",
+    "issn": "2375-2548"
+  },
+  {
+    "id": "elife",
+    "title": "eLife",
+    "issn": "2050-084X"
+  },
+  {
+    "id": "nature-machine-intelligence",
+    "title": "Nature Machine Intelligence",
+    "issn": "2522-5839"
+  },
+  {
+    "id": "jair",
+    "title": "Journal of Artificial Intelligence Research",
+    "issn": "1076-9757"
+  },
+  {
+    "id": "computational-linguistics",
+    "title": "Computational Linguistics",
+    "issn": "0891-2017"
+  },
+  {
+    "id": "natural-language-engineering",
+    "title": "Natural Language Engineering",
+    "issn": "1351-3249"
+  },
+  {
+    "id": "ieee-tip",
+    "title": "IEEE Transactions on Image Processing",
+    "issn": "1057-7149"
+  },
+  {
+    "id": "ijcv",
+    "title": "International Journal of Computer Vision",
+    "issn": "0920-5691"
+  },
+  {
+    "id": "ieee-tse",
+    "title": "IEEE Transactions on Software Engineering",
+    "issn": "0098-5589"
+  },
+  {
+    "id": "acm-computing-surveys",
+    "title": "ACM Computing Surveys",
+    "issn": "0360-0300"
+  },
+  {
+    "id": "vldb-journal",
+    "title": "The VLDB Journal",
+    "issn": "0949-877X"
+  },
+  {
+    "id": "pvldb",
+    "title": "Proceedings of the VLDB Endowment",
+    "issn": "2150-8097"
+  },
+  {
+    "id": "ieee-tmi",
+    "title": "IEEE Transactions on Medical Imaging",
+    "issn": "0278-0062"
+  },
+  {
+    "id": "medical-image-analysis",
+    "title": "Medical Image Analysis",
+    "issn": "1361-8415"
+  },
+  {
+    "id": "npj-digital-medicine",
+    "title": "npj Digital Medicine",
+    "issn": "2398-6352"
+  },
+  {
+    "id": "lancet-digital-health",
+    "title": "The Lancet Digital Health",
+    "issn": "2589-7500"
+  },
+  {
+    "id": "ijrr",
+    "title": "The International Journal of Robotics Research",
+    "issn": "0278-3649"
+  },
+  {
+    "id": "science-robotics",
+    "title": "Science Robotics",
+    "issn": "2470-9476"
+  },
+  {
+    "id": "robotics-autonomous-systems",
+    "title": "Robotics and Autonomous Systems",
+    "issn": "0921-8890"
   }
 ]
