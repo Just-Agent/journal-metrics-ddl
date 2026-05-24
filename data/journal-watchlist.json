@@ -58,5 +58,55 @@
     "id": "bioinformatics",
     "title": "Bioinformatics",
     "issn": "1367-4811"
+  },
+  {
+    "id": "jmlr",
+    "title": "Journal of Machine Learning Research",
+    "issn": "1532-4435"
+  },
+  {
+    "id": "artificial-intelligence",
+    "title": "Artificial Intelligence",
+    "issn": "0004-3702"
+  },
+  {
+    "id": "machine-learning",
+    "title": "Machine Learning",
+    "issn": "0885-6125"
+  },
+  {
+    "id": "pattern-recognition",
+    "title": "Pattern Recognition",
+    "issn": "0031-3203"
+  },
+  {
+    "id": "information-fusion",
+    "title": "Information Fusion",
+    "issn": "1566-2535"
+  },
+  {
+    "id": "ieee-tnnls",
+    "title": "IEEE Transactions on Neural Networks and Learning Systems",
+    "issn": "2162-237X"
+  },
+  {
+    "id": "ieee-tkde",
+    "title": "IEEE Transactions on Knowledge and Data Engineering",
+    "issn": "1041-4347"
+  },
+  {
+    "id": "acm-tog",
+    "title": "ACM Transactions on Graphics",
+    "issn": "0730-0301"
+  },
+  {
+    "id": "cviu",
+    "title": "Computer Vision and Image Understanding",
+    "issn": "1077-3142"
+  },
+  {
+    "id": "tacl",
+    "title": "Transactions of the Association for Computational Linguistics",
+    "issn": "2307-387X"
   }
 ]
