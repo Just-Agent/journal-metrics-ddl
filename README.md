@@ -4,7 +4,7 @@
 
 ## 首批专题
 
-- `cas-partition-ddl`：中科院期刊分区表历史节点、停更声明、授权数据边界。
+- `cas-partition-ddl`：中科院期刊分区表发布沿革、停更声明、历史查询与授权导入边界。
 - `jcr-impact-factor-ddl`：JCR 年度发布时间、10 月后续修正/数据 reload 节点、影响因子授权导入边界。
 - `journal-volume-ddl`：用开放元数据统计代表期刊发文量、年度发文趋势和最新完整年同比变化。
 
@@ -14,7 +14,7 @@
 
 - JCR 今年什么时候发布，过去几年是否稳定在 6 月下旬，10 月是否有后续修正。
 - 某本期刊影响因子和 quartile 这些年怎么变化。
-- 中科院分区历史如何变化，2026 停更后怎么处理往年数据。
+- 中科院分区历史如何变化，2026 停更后怎么处理往年数据，以及如何合规导入单刊分区轨迹。
 - 期刊当前发文量是否扩张/收缩，统计口径来自哪里。
 
 因此本仓库严格区分：
@@ -31,6 +31,19 @@
 - 发文量必须显示统计口径；OpenAlex 发文量不等于 Web of Science/JCR 精确统计。
 - 首批发文量 watchlist 覆盖综合、医学、计算机和生物信息学代表期刊，后续可以继续按学科扩展。
 - JCR 轨迹首版覆盖 2021-2025 年 6 月年度发布记录与 2021-2025 年 10 月 Data Reload / correction 记录；2026 发布窗口和修正观察窗口均以这些官方历史节点为依据。
+
+## CAS 授权导入
+
+公开仓库不会抓取需要登录或机构授权的单刊分区明细。如果你有合规授权文件，可以按模板导入：
+
+```powershell
+Copy-Item data/imports/cas-partition-history.template.csv data/imports/cas-partition-history.csv
+$env:CAS_HISTORY_CSV='data/imports/cas-partition-history.csv'
+npm run import:cas-history
+npm run validate
+```
+
+导入后会生成 `cas_major_zone` 指标快照，用于展示某本期刊历年一区/二区/三区/四区变化；导入文件不应提交含敏感授权信息的原始材料。
 
 ## Commands
 
