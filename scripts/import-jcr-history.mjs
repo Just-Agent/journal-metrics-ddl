@@ -3,6 +3,7 @@ import path from "node:path";
 
 const inputFile = process.env.JCR_HISTORY_CSV || "";
 const outputFile = new URL("../data/topics/jcr-impact-factor-ddl/metrics.json", import.meta.url);
+const replaceAllImported = process.env.JCR_IMPORT_REPLACE_ALL === "1";
 const requiredColumns = [
   "journalTitle",
   "issn",
@@ -66,7 +67,7 @@ function readExistingMetrics() {
   return JSON.parse(fs.readFileSync(outputFile, "utf8"));
 }
 
-function buildMetrics(row) {
+function validateRow(row) {
   const year = Number(row.jcrYear);
   const jif = Number(row.jif);
   const quartile = String(row.quartile).toUpperCase();
@@ -77,9 +78,12 @@ function buildMetrics(row) {
     throw new Error(`${row.journalTitle} invalid totalJournals ${row.totalJournals}`);
   }
   assertUrl(row.url, `${row.journalTitle}.url`);
+  return { year, jif, quartile };
+}
 
+function baseMetric(row, year) {
   const journalId = slug(`${row.journalTitle}-${row.issn}`);
-  const base = {
+  return {
     topicId: "jcr-impact-factor-ddl",
     type: "metricSnapshot",
     journalId,
@@ -96,23 +100,42 @@ function buildMetrics(row) {
     rank: row.rank || "",
     totalJournals: row.totalJournals ? Number(row.totalJournals) : null
   };
+}
 
-  return [
-    {
+function buildImportedMetrics(rows) {
+  const imported = [];
+  const jifByJournalYear = new Map();
+
+  for (const row of rows) {
+    const { year, jif, quartile } = validateRow(row);
+    const base = baseMetric(row, year);
+    const jifKey = `${base.journalId}:${year}`;
+    const existingJif = jifByJournalYear.get(jifKey);
+    if (existingJif && existingJif.value !== jif) {
+      throw new Error(`${row.journalTitle} ${year} has conflicting JIF values: ${existingJif.value} vs ${jif}`);
+    }
+    if (!existingJif) {
+      const metric = {
+        ...base,
+        id: `jcr-${base.journalId}-${year}-impact-factor`,
+        metric: "journal_impact_factor",
+        value: jif,
+        scopeNote: `${base.jcrEdition} Journal Impact Factor 导入记录；公开仓库不绕过 JCR 权限抓取。`
+      };
+      jifByJournalYear.set(jifKey, metric);
+      imported.push(metric);
+    }
+
+    imported.push({
       ...base,
-      id: `jcr-${journalId}-${year}-impact-factor`,
-      metric: "journal_impact_factor",
-      value: jif,
-      scopeNote: `${base.jcrEdition} ${row.category} Journal Impact Factor 导入记录；公开仓库不绕过 JCR 权限抓取。`
-    },
-    {
-      ...base,
-      id: `jcr-${journalId}-${year}-quartile-${slug(row.category)}`,
+      id: `jcr-${base.journalId}-${year}-quartile-${slug(row.category)}`,
       metric: "jcr_quartile",
       value: quartile,
       scopeNote: `${base.jcrEdition} ${row.category} JIF quartile 导入记录；公开仓库不绕过 JCR 权限抓取。`
-    }
-  ];
+    });
+  }
+
+  return imported;
 }
 
 if (!inputFile) {
@@ -136,18 +159,21 @@ if (lines.length < 2) {
   process.exit(0);
 }
 
-const imported = lines.slice(1).flatMap((line, index) => {
+const rows = lines.slice(1).map((line, index) => {
   const cells = parseCsvLine(line);
   const row = Object.fromEntries(headers.map((header, cellIndex) => [header, cells[cellIndex] || ""]));
   for (const column of requiredColumns) {
     if (!row[column]) throw new Error(`row ${index + 2} missing ${column}`);
   }
-  return buildMetrics(row);
+  return row;
 });
+const imported = buildImportedMetrics(rows);
+const importedIds = new Set(imported.map((metric) => metric.id));
 
 const existing = readExistingMetrics().filter((metric) => {
   if (metric.id === importPlaceholderId) return false;
-  return !importedMetrics.has(metric.metric);
+  if (replaceAllImported) return !importedMetrics.has(metric.metric);
+  return !importedIds.has(metric.id);
 });
 const next = [...existing, ...imported].sort((a, b) => {
   const title = String(a.journalTitle || "").localeCompare(String(b.journalTitle || ""), "zh-CN");

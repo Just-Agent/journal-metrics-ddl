@@ -47,6 +47,15 @@ npm run validate
 
 导入后会生成 `cas_major_zone` 指标快照，用于展示某本期刊历年一区/二区/三区/四区变化；导入文件不应提交含敏感授权信息的原始材料。
 
+CSV 中如果学科名、类别名或来源名包含英文逗号，请用英文双引号包住整列，例如 `"Computer Science, Artificial Intelligence"`。
+
+默认导入是增量更新：同一本期刊、同一年、同一大类的记录会被新 CSV 覆盖，其他已导入期刊会保留。若确实要重建全部 CAS 单刊轨迹，再设置：
+
+```powershell
+$env:CAS_IMPORT_REPLACE_ALL='1'
+npm run import:cas-history
+```
+
 ## JCR 授权导入
 
 单刊影响因子、JIF Quartile 和类别排名通常属于 JCR 授权数据。仓库提供导入通道，但不提交原始授权文件：
@@ -59,6 +68,15 @@ npm run validate
 ```
 
 导入后会生成两类 `metricSnapshot`：`journal_impact_factor` 和 `jcr_quartile`。公开页面只展示期刊名、年份、JIF、Quartile、类别和来源链接；授权文件本身不进入 Hub 或小程序公开出口。
+
+CSV 中如果 JCR 类别包含英文逗号，请用英文双引号包住整列，例如 `"Computer Science, Artificial Intelligence"`，否则普通 CSV 解析会把它拆成两列。
+
+默认导入是增量更新：同一本期刊、同一年、同一类别的 Quartile 记录会被新 CSV 覆盖，其他已导入期刊会保留；同一本期刊同一年只保留一个 Journal Impact Factor，避免多类别期刊重复生成 JIF。若要重建全部 JCR 单刊轨迹，再设置：
+
+```powershell
+$env:JCR_IMPORT_REPLACE_ALL='1'
+npm run import:jcr-history
+```
 
 ## Commands
 

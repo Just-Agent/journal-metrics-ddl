@@ -3,6 +3,7 @@ import fs from "node:fs";
 const root = new URL("../data/topics/", import.meta.url);
 const errors = [];
 const ids = new Set();
+const metricIds = new Set();
 let itemCount = 0;
 let metricCount = 0;
 
@@ -108,6 +109,8 @@ function validateMetric(metric, topicId, file, index) {
   const label = metric.id || `${file.pathname} metric ${index}`;
   requireFields(metric, ["id", "topicId", "type", "metric", "value", "source", "url", "accessMode", "scopeNote"], label);
   if (metric.topicId !== topicId) errors.push(`${label} topicId does not match folder ${topicId}`);
+  if (metric.id && metricIds.has(metric.id)) errors.push(`duplicate metric id ${metric.id}`);
+  if (metric.id) metricIds.add(metric.id);
   if (metric.type !== "metricSnapshot") errors.push(`${label} type must be metricSnapshot`);
   if (!metric.year && !metric.asOfDate) errors.push(`${label} missing year or asOfDate`);
   if (metric.url) assertUrl(metric.url, `${label}.url`);
@@ -135,6 +138,15 @@ function validateMetric(metric, topicId, file, index) {
   if (metric.metric === "jcr_quartile") {
     if (!["Q1", "Q2", "Q3", "Q4"].includes(String(metric.value).toUpperCase())) errors.push(`${label} invalid JCR quartile ${metric.value}`);
     requireFields(metric, ["journalTitle", "issn", "category", "jcrEdition"], label);
+  }
+  if (metric.metric === "cas_major_zone") {
+    const zone = Number(metric.value);
+    if (!Number.isInteger(zone) || zone < 1 || zone > 4) errors.push(`${label} invalid CAS major zone ${metric.value}`);
+    requireFields(metric, ["journalTitle", "issn", "casVersion", "majorCategory"], label);
+    if (metric.minorZone !== undefined && metric.minorZone !== null && metric.minorZone !== "") {
+      const minorZone = Number(metric.minorZone);
+      if (!Number.isInteger(minorZone) || minorZone < 1 || minorZone > 4) errors.push(`${label} invalid CAS minor zone ${metric.minorZone}`);
+    }
   }
   scan(metric, label);
 }

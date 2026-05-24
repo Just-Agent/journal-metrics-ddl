@@ -3,6 +3,7 @@ import path from "node:path";
 
 const inputFile = process.env.CAS_HISTORY_CSV || "";
 const outputFile = new URL("../data/topics/cas-partition-ddl/metrics.json", import.meta.url);
+const replaceAllImported = process.env.CAS_IMPORT_REPLACE_ALL === "1";
 const requiredColumns = [
   "journalTitle",
   "issn",
@@ -128,8 +129,12 @@ const imported = lines.slice(1).map((line, index) => {
   }
   return buildMetric(row);
 });
+const importedIds = new Set(imported.map((metric) => metric.id));
 
-const existing = readExistingMetrics().filter((metric) => metric.metric !== "cas_major_zone");
+const existing = readExistingMetrics().filter((metric) => {
+  if (replaceAllImported) return metric.metric !== "cas_major_zone";
+  return !importedIds.has(metric.id);
+});
 const next = [...existing, ...imported].sort((a, b) => {
   const title = String(a.journalTitle || "").localeCompare(String(b.journalTitle || ""), "zh-CN");
   if (title !== 0) return title;
