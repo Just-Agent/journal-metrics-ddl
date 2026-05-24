@@ -632,8 +632,8 @@
             追踪 JCR 年度发布、后续修正、中科院分区官方边界，以及开放元数据口径下的期刊发文量。这里把正式 DDL、历史节点、指标快照和预测窗口分开显示，避免把预测误当成官方日期。
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="data/topics/jcr-impact-factor-ddl/items.json">查看 JCR 数据</a>
-            <a class="button" href="data/topics/journal-volume-ddl/metrics.json">查看发文量快照</a>
+            <a class="button primary" href="public-data/topics/jcr-impact-factor-ddl/items.json">查看 JCR 数据</a>
+            <a class="button" href="public-data/topics/journal-volume-ddl/metrics.json">查看发文量快照</a>
           </div>
         </div>
         <aside class="board" aria-label="Deployment board">
@@ -659,7 +659,7 @@
           <div>
             <span class="pill">历史与预测</span>
             <h2>JCR / CAS 关键节点</h2>
-            <p>历史节点不会进入官方倒计时；预测窗口只作为维护和趋势提醒。</p>
+            <p>历史节点不会进入官方倒计时；预测窗口只作为趋势观察，不作为官方日期。</p>
           </div>
         </div>
         <div class="timeline" id="timeline"></div>
@@ -933,8 +933,8 @@
       async function main() {
         const topicBundles = await Promise.all(topicIds.map(async (topicId) => ({
           topicId,
-          items: await json(`data/topics/${topicId}/items.json`),
-          metrics: await json(`data/topics/${topicId}/metrics.json`).catch(() => [])
+          items: await json(`public-data/topics/${topicId}/items.json`),
+          metrics: await json(`public-data/topics/${topicId}/metrics.json`).catch(() => [])
         })));
         const items = topicBundles.flatMap((bundle) => bundle.items);
         const metrics = topicBundles.flatMap((bundle) => bundle.metrics);

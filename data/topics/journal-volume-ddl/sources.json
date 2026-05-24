@@ -8,6 +8,7 @@
       "type": "open-metadata",
       "accessMode": "public",
       "parser": "openalex-source-object",
+      "linkCheckMode": "manual_verified",
       "markers": ["works_count", "counts_by_year", "source"],
       "refreshCadence": "weekly",
       "coverageNote": "用于开放元数据口径下的 works_count 和 counts_by_year 统计。"

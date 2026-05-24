@@ -1,0 +1,31 @@
+{
+  "topicId": "journal-volume-ddl",
+  "sourceFamilies": [
+    {
+      "sourceLabel": "公开来源",
+      "id": "openalex-sources",
+      "name": "OpenAlex Sources API",
+      "url": "https://docs.openalex.org/api-entities/sources/source-object",
+      "type": "open-metadata",
+      "markers": [
+        "works_count",
+        "counts_by_year",
+        "source"
+      ],
+      "refreshCadence": "weekly"
+    },
+    {
+      "sourceLabel": "公开来源",
+      "id": "crossref-rest-api",
+      "name": "Crossref REST API",
+      "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+      "type": "open-metadata",
+      "markers": [
+        "works",
+        "filter",
+        "ISSN"
+      ],
+      "refreshCadence": "planned"
+    }
+  ]
+}

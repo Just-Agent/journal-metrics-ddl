@@ -8,6 +8,9 @@
     "import:cas-history": "node scripts/import-cas-history.mjs",
     "import:jcr-history": "node scripts/import-jcr-history.mjs",
     "validate": "node scripts/validate-data.mjs",
+    "export:public": "node scripts/export-public-data.mjs",
+    "validate:public": "node scripts/validate-public-data.mjs",
+    "build": "npm run validate && npm run export:public && npm run validate:public",
     "link-check": "node scripts/link-check.mjs"
   }
 }

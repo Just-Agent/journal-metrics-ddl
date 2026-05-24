@@ -1,0 +1,30 @@
+{
+  "topicId": "cas-partition-ddl",
+  "sourceFamilies": [
+    {
+      "sourceLabel": "公开来源",
+      "id": "cas-las-statement",
+      "name": "中国科学院文献情报中心通知公告",
+      "url": "https://www.las.cas.cn/news/tzgg/202603/t20260327_8178738.html",
+      "type": "official",
+      "markers": [
+        "不再更新",
+        "期刊分区表",
+        "声明"
+      ],
+      "refreshCadence": "manual"
+    },
+    {
+      "sourceLabel": "人工核验来源",
+      "id": "cas-partition-platform",
+      "name": "中科院期刊分区表在线平台",
+      "url": "https://www.fenqubiao.com/",
+      "type": "official-platform",
+      "markers": [
+        "期刊分区表",
+        "查询"
+      ],
+      "refreshCadence": "manual"
+    }
+  ]
+}

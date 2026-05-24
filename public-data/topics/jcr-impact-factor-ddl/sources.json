@@ -1,0 +1,44 @@
+{
+  "topicId": "jcr-impact-factor-ddl",
+  "sourceFamilies": [
+    {
+      "sourceLabel": "公开来源",
+      "id": "clarivate-jcr-news",
+      "name": "Clarivate JCR News",
+      "url": "https://clarivate.com/news/clarivate-unveils-the-2025-journal-citation-reports/",
+      "type": "official",
+      "markers": [
+        "Journal Citation Reports",
+        "JCR",
+        "released"
+      ],
+      "refreshCadence": "weekly"
+    },
+    {
+      "sourceLabel": "公开来源",
+      "id": "clarivate-jcr-support",
+      "name": "Clarivate JCR Support",
+      "url": "https://journalcitationreports.zendesk.com/",
+      "type": "official-support",
+      "markers": [
+        "JCR data",
+        "correct metrics",
+        "release"
+      ],
+      "refreshCadence": "monthly"
+    },
+    {
+      "sourceLabel": "授权导入来源",
+      "id": "jcr-licensed-data",
+      "name": "Journal Citation Reports Licensed Data",
+      "url": "https://clarivate.com/academia-government/scientific-and-academic-research/research-funding-analytics/journal-citation-reports/",
+      "type": "licensed-database",
+      "markers": [
+        "Journal Impact Factor",
+        "quartile",
+        "JCR"
+      ],
+      "refreshCadence": "annual"
+    }
+  ]
+}
