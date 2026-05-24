@@ -443,6 +443,118 @@
         box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
       }
 
+      .query-panel {
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background:
+          linear-gradient(180deg, rgba(14, 165, 233, 0.08), transparent 38%),
+          #fff;
+        box-shadow: var(--shadow);
+      }
+
+      .query-toolbar {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .query-input {
+        width: 100%;
+        min-height: 48px;
+        padding: 0 16px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        color: var(--ink);
+        background: #fff;
+        font: inherit;
+        font-weight: 800;
+      }
+
+      .query-input:focus {
+        border-color: rgba(14, 165, 233, 0.7);
+        outline: 3px solid rgba(14, 165, 233, 0.16);
+      }
+
+      .query-count {
+        display: inline-flex;
+        align-items: center;
+        min-height: 40px;
+        padding: 0 13px;
+        border-radius: 999px;
+        color: #0369a1;
+        background: #e0f2fe;
+        font-size: 13px;
+        font-weight: 950;
+        white-space: nowrap;
+      }
+
+      .lookup-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 16px;
+      }
+
+      .lookup-card {
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.92);
+      }
+
+      .lookup-card h3 {
+        margin: 10px 0 8px;
+        font-size: 20px;
+      }
+
+      .lookup-values {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin: 14px 0;
+      }
+
+      .lookup-value {
+        min-height: 74px;
+        padding: 12px;
+        border: 1px solid #dbeafe;
+        border-radius: 16px;
+        background: #f8fbff;
+      }
+
+      .lookup-value strong {
+        display: block;
+        font-size: 22px;
+        line-height: 1;
+      }
+
+      .lookup-value span {
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 850;
+      }
+
+      .lookup-series {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .empty-result {
+        margin-top: 16px;
+        padding: 18px;
+        border: 1px dashed #bfdbfe;
+        border-radius: 18px;
+        color: var(--muted);
+        background: #f8fbff;
+        font-weight: 800;
+      }
+
       .journal-cover {
         min-height: 142px;
         padding: 20px;
@@ -571,7 +683,8 @@
 
         .grid,
         .jcr-impact-grid,
-        .journal-grid {
+        .journal-grid,
+        .lookup-grid {
           grid-template-columns: 1fr;
         }
 
@@ -604,6 +717,11 @@
         }
 
         .mini-metrics {
+          grid-template-columns: 1fr;
+        }
+
+        .query-toolbar,
+        .lookup-values {
           grid-template-columns: 1fr;
         }
       }
@@ -652,6 +770,23 @@
           </div>
         </div>
         <div class="grid" id="railCards"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <span class="pill">Journal Lookup</span>
+            <h2>查某一本期刊</h2>
+            <p>输入期刊名或 ISSN，查看当前 OpenAlex 发文量、最新完整年趋势；如果后续导入 JCR/CAS 授权 CSV，同一个卡片会直接显示影响因子、Quartile 和中科院分区轨迹。</p>
+          </div>
+        </div>
+        <div class="query-panel">
+          <div class="query-toolbar">
+            <input class="query-input" id="journalSearch" type="search" placeholder="搜索 Nature、TPAMI、JMLR、ISSN..." autocomplete="off" />
+            <span class="query-count" id="journalSearchCount">0 本期刊</span>
+          </div>
+          <div class="lookup-grid" id="journalExplorer"></div>
+        </div>
       </section>
 
       <section class="section">
@@ -746,6 +881,65 @@
 
       function yearLabel(row) {
         return row.yearCompleteness === "partial_ytd" ? `${row.year} YTD` : row.year;
+      }
+
+      function latestByYear(rows) {
+        return [...rows].sort((a, b) => Number(b.year || 0) - Number(a.year || 0))[0] || null;
+      }
+
+      function buildJournalProfiles(metrics) {
+        const profileMap = new Map();
+        function ensure(key, fallback = {}) {
+          if (!profileMap.has(key)) {
+            profileMap.set(key, {
+              key,
+              title: fallback.journalTitle || fallback.title || key,
+              issn: fallback.issn || "",
+              rows: [],
+              volumeRows: [],
+              jcrRows: [],
+              casRows: []
+            });
+          }
+          return profileMap.get(key);
+        }
+
+        for (const metric of metrics) {
+          if (!metric.journalId && !metric.journalTitle) continue;
+          const key = metric.journalId || metric.journalTitle;
+          const profile = ensure(key, metric);
+          profile.title = metric.journalTitle || profile.title;
+          profile.issn = metric.issn || profile.issn;
+          profile.rows.push(metric);
+          if (metric.topicId === "journal-volume-ddl") profile.volumeRows.push(metric);
+          if (metric.topicId === "jcr-impact-factor-ddl" && ["journal_impact_factor", "jcr_quartile"].includes(metric.metric)) {
+            profile.jcrRows.push(metric);
+          }
+          if (metric.topicId === "cas-partition-ddl" && metric.metric === "cas_major_zone") profile.casRows.push(metric);
+        }
+
+        return [...profileMap.values()].map((profile) => {
+          const yearly = profile.volumeRows
+            .filter((row) => row.metric === "openalex_works_count_by_year")
+            .sort((a, b) => Number(b.year) - Number(a.year));
+          const total = profile.volumeRows.find((row) => row.metric === "openalex_works_count_total");
+          const ytd = yearly.find((row) => row.yearCompleteness === "partial_ytd");
+          const complete = yearly.find((row) => row.yearCompleteness !== "partial_ytd");
+          const latestJif = latestByYear(profile.jcrRows.filter((row) => row.metric === "journal_impact_factor"));
+          const latestQuartile = latestByYear(profile.jcrRows.filter((row) => row.metric === "jcr_quartile"));
+          const latestCas = latestByYear(profile.casRows);
+          return {
+            ...profile,
+            total,
+            yearly,
+            ytd,
+            complete,
+            trend: trendFor(yearly),
+            latestJif,
+            latestQuartile,
+            latestCas
+          };
+        }).sort((a, b) => a.title.localeCompare(b.title, "zh-CN"));
       }
 
       function renderStats(items, metrics) {
@@ -884,6 +1078,61 @@
         target.innerHTML = cards.join("");
       }
 
+      function renderJournalExplorer(profiles, query = "") {
+        const needle = query.trim().toLowerCase();
+        const filtered = profiles.filter((profile) => {
+          if (!needle) return true;
+          return [
+            profile.key,
+            profile.title,
+            profile.issn,
+            profile.latestJif?.category,
+            profile.latestCas?.majorCategory
+          ].filter(Boolean).some((value) => String(value).toLowerCase().includes(needle));
+        });
+        const visible = filtered.slice(0, needle ? 12 : 6);
+        document.querySelector("#journalSearchCount").textContent = `${filtered.length} 本期刊`;
+        const target = document.querySelector("#journalExplorer");
+        if (!visible.length) {
+          target.innerHTML = `<div class="empty-result">暂未命中。可以先从 watchlist 里的 Nature、Science、Cell、TPAMI、JMLR、The Lancet 等期刊开始搜索。</div>`;
+          return;
+        }
+        target.innerHTML = visible.map((profile) => {
+          const trend = profile.trend;
+          const source = profile.total || profile.complete || profile.ytd || profile.latestJif || profile.latestCas;
+          return `
+            <article class="lookup-card">
+              <span class="pill">${profile.issn || "Journal"}</span>
+              <h3>${profile.title}</h3>
+              <div class="meta">
+                ${trend ? `<span class="trend-chip ${trend.kind}">${trend.label}</span>` : "<span>趋势待补充</span>"}
+                ${profile.latestQuartile ? `<span>${profile.latestQuartile.category || "JCR"} ${profile.latestQuartile.value}</span>` : "<span>JCR 待授权导入</span>"}
+                ${profile.latestCas ? `<span>CAS ${profile.latestCas.value} 区</span>` : "<span>CAS 待授权导入</span>"}
+              </div>
+              <div class="lookup-values">
+                <div class="lookup-value">
+                  <strong>${formatNumber(Number(profile.total?.value || 0))}</strong>
+                  <span>OpenAlex total</span>
+                </div>
+                <div class="lookup-value">
+                  <strong>${profile.complete ? formatNumber(Number(profile.complete.value)) : "-"}</strong>
+                  <span>${profile.complete ? `${profile.complete.year} 完整年` : "完整年"}</span>
+                </div>
+                <div class="lookup-value">
+                  <strong>${profile.ytd ? formatNumber(Number(profile.ytd.value)) : "-"}</strong>
+                  <span>${profile.ytd ? `${profile.ytd.year} YTD` : "当前年 YTD"}</span>
+                </div>
+              </div>
+              ${trend ? `<div class="small-label">${trend.text}</div>` : ""}
+              <div class="lookup-series">
+                ${profile.yearly.slice(0, 5).map((row) => `<span class="trend-chip flat">${yearLabel(row)} · ${formatNumber(row.value)}</span>`).join("")}
+              </div>
+              ${source?.url ? `<div class="meta"><a class="source-link" href="${source.url}" target="_blank" rel="noreferrer">来源</a></div>` : ""}
+            </article>
+          `;
+        }).join("");
+      }
+
       function renderJournals(metrics) {
         const grouped = metrics
           .filter((metric) => metric.topicId === "journal-volume-ddl")
@@ -945,6 +1194,11 @@
         renderRails(items, metrics);
         renderTimeline(items);
         renderJcrImpact(metrics);
+        const journalProfiles = buildJournalProfiles(metrics);
+        renderJournalExplorer(journalProfiles);
+        document.querySelector("#journalSearch").addEventListener("input", (event) => {
+          renderJournalExplorer(journalProfiles, event.target.value);
+        });
         renderJournals(metrics);
       }
 
