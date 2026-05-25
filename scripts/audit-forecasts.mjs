@@ -51,6 +51,25 @@ function sameArray(a = [], b = []) {
   return a.length === b.length && a.every((value, index) => value === b[index]);
 }
 
+function isHttpUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
+function isRootLikeUrl(value) {
+  try {
+    const url = new URL(value);
+    const pathname = url.pathname.replace(/\/+$/, "");
+    return pathname === "" || /^\/[a-z]{2}(?:-[a-z]{2})?$/i.test(pathname);
+  } catch {
+    return false;
+  }
+}
+
 function officialDate(item) {
   return isoDate(item.date || item.deadline || item.lastOfficialDate);
 }
@@ -105,6 +124,8 @@ function validateForecast(file, items, forecast) {
   if (!forecast.estimatedNextWindow?.start || !forecast.estimatedNextWindow?.end) errors.push(`${label} must include estimatedNextWindow`);
   if (!["low", "medium", "high"].includes(String(forecast.confidence || ""))) errors.push(`${label} must include confidence`);
   if (!forecast.forecastBasis) errors.push(`${label} must include forecastBasis`);
+  if (!isHttpUrl(forecast.sourceUrl)) errors.push(`${label} must include an http(s) sourceUrl`);
+  if (isRootLikeUrl(forecast.sourceUrl)) errors.push(`${label} sourceUrl must point to an official evidence page, not a generic homepage`);
   if (!Array.isArray(forecast.basisEvents) || forecast.basisEvents.length < 2) {
     errors.push(`${label} must include at least two basisEvents`);
     return;
@@ -113,6 +134,9 @@ function validateForecast(file, items, forecast) {
   const basis = forecast.basisEvents.map((id) => ({ id, item: byId.get(id) }));
   const missing = basis.filter(({ item }) => !item).map(({ id }) => id);
   if (missing.length) errors.push(`${label} missing basisEvents: ${missing.join(", ")}`);
+  for (const { id, item } of basis) {
+    if (item && !isHttpUrl(item.sourceUrl)) errors.push(`${label} basisEvent ${id} must include an http(s) sourceUrl`);
+  }
 
   const dates = basis.map(({ item }) => officialDate(item)).filter(Boolean);
   if (dates.length !== forecast.basisEvents.length) {
