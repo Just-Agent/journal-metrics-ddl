@@ -310,6 +310,70 @@
         gap: 14px;
       }
 
+      .cadence-board {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .cadence-card {
+        min-height: 238px;
+        padding: 20px;
+        border: 1px solid rgba(14, 165, 233, 0.22);
+        border-radius: 26px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(239, 250, 255, 0.9)),
+          #fff;
+        box-shadow: 0 14px 34px rgba(14, 165, 233, 0.09);
+      }
+
+      .cadence-card h3 {
+        margin: 12px 0 10px;
+        font-size: 22px;
+        line-height: 1.22;
+      }
+
+      .cadence-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .cadence-facts {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin: 16px 0;
+      }
+
+      .cadence-fact {
+        padding: 12px;
+        border: 1px solid #dbeafe;
+        border-radius: 16px;
+        background: #f8fbff;
+      }
+
+      .cadence-fact strong {
+        display: block;
+        font-size: 21px;
+        line-height: 1.12;
+      }
+
+      .cadence-fact span {
+        display: block;
+        margin-top: 7px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 850;
+      }
+
+      .cadence-dates {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
       .row {
         display: grid;
         grid-template-columns: 150px minmax(0, 1fr) 180px;
@@ -808,7 +872,8 @@
         .journal-grid,
         .lookup-grid,
         .profile-grid,
-        .profile-columns {
+        .profile-columns,
+        .cadence-board {
           grid-template-columns: 1fr;
         }
 
@@ -922,6 +987,17 @@
             <p>历史节点不会进入官方倒计时；预测窗口只作为趋势观察，不作为官方日期。</p>
           </div>
         </div>
+        <div class="cadence-board" id="jcrCadenceBoard"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <span class="pill">完整时间线</span>
+            <h2>年度发布、修正与授权边界</h2>
+            <p>保留每个官方节点的日期、来源和语义，方便回看 JCR 与 CAS 的长期节奏。</p>
+          </div>
+        </div>
         <div class="timeline" id="timeline"></div>
       </section>
 
@@ -996,6 +1072,23 @@
       function daysUntil(value) {
         const diff = new Date(value).getTime() - Date.now();
         return Math.ceil(diff / 86400000);
+      }
+
+      function monthDay(value) {
+        const date = new Date(value);
+        return `${date.getMonth() + 1}月${date.getDate()}日`;
+      }
+
+      function dayOfYear(value) {
+        const date = new Date(value);
+        const start = new Date(date.getFullYear(), 0, 0);
+        return Math.floor((date - start) / 86400000);
+      }
+
+      function dateRangeLabel(records) {
+        if (!records.length) return "等待样本";
+        const sorted = [...records].sort((a, b) => dayOfYear(a.date) - dayOfYear(b.date));
+        return `${monthDay(sorted[0].date)} - ${monthDay(sorted[sorted.length - 1].date)}`;
       }
 
       function trendFor(yearly) {
@@ -1152,6 +1245,66 @@
             </article>
           `;
         }).join("");
+      }
+
+      function renderJcrCadence(items) {
+        const jcrItems = items.filter((item) => item.topicId === "jcr-impact-factor-ddl");
+        const annual = jcrItems
+          .filter((item) => item.type === "historyEvent" && item.subtopic === "jcr-release")
+          .sort((a, b) => new Date(b.date) - new Date(a.date));
+        const corrections = jcrItems
+          .filter((item) => item.type === "historyEvent" && item.subtopic === "jcr-corrections")
+          .sort((a, b) => new Date(b.date) - new Date(a.date));
+        const annualForecast = jcrItems.find((item) => item.type === "forecastWindow" && item.subtopic === "jcr-release");
+        const correctionForecast = jcrItems.find((item) => item.type === "forecastWindow" && item.subtopic === "jcr-corrections");
+        const officialNext = jcrItems.find((item) => item.type === "officialDeadline" && item.deadline);
+
+        const annualDays = annual.map((item) => dayOfYear(item.date));
+        const correctionDays = corrections.map((item) => dayOfYear(item.date));
+        const annualSpan = annualDays.length ? Math.max(...annualDays) - Math.min(...annualDays) : 0;
+        const correctionSpan = correctionDays.length ? Math.max(...correctionDays) - Math.min(...correctionDays) : 0;
+
+        document.querySelector("#jcrCadenceBoard").innerHTML = `
+          <article class="cadence-card">
+            <span class="pill">Annual Release</span>
+            <h3>年度发布集中在 6 月下旬</h3>
+            <p>基于 Clarivate 2021-2025 年 JCR 官方发布节点。这个轨道解释“JCR 大概何时发布”，不替代当年官方公告。</p>
+            <div class="cadence-facts">
+              <div class="cadence-fact"><strong>${annual.length} 年</strong><span>历史样本</span></div>
+              <div class="cadence-fact"><strong>${annualSpan} 天</strong><span>样本跨度</span></div>
+            </div>
+            <div class="cadence-dates">
+              <span class="trend-chip flat">${dateRangeLabel(annual)}</span>
+              ${annual.slice(0, 5).map((item) => `<span class="trend-chip">${escapeHtml(item.date.slice(0, 4))}: ${escapeHtml(monthDay(item.date))}</span>`).join("")}
+            </div>
+          </article>
+          <article class="cadence-card">
+            <span class="pill">Reload / Correction</span>
+            <h3>后续修正多落在 10 月</h3>
+            <p>JCR 发布后还可能出现数据 reload、support page correction 或后续更新记录。这里把它作为观察窗口，不写成官方截止日。</p>
+            <div class="cadence-facts">
+              <div class="cadence-fact"><strong>${corrections.length} 年</strong><span>历史样本</span></div>
+              <div class="cadence-fact"><strong>${correctionSpan} 天</strong><span>样本跨度</span></div>
+            </div>
+            <div class="cadence-dates">
+              <span class="trend-chip flat">${dateRangeLabel(corrections)}</span>
+              ${corrections.slice(0, 5).map((item) => `<span class="trend-chip">${escapeHtml(item.date.slice(0, 4))}: ${escapeHtml(monthDay(item.date))}</span>`).join("")}
+            </div>
+          </article>
+          <article class="cadence-card">
+            <span class="pill">2026 Watch</span>
+            <h3>下一次以官方公告为准</h3>
+            <p>2026 已有官方说明活动；年度发布和 10 月修正仍按预测窗口展示，直到 Clarivate 发布正式公告后再转为历史节点。</p>
+            <div class="cadence-facts">
+              <div class="cadence-fact"><strong>${officialNext ? `${daysUntil(officialNext.deadline)} 天` : "待公告"}</strong><span>${officialNext ? "官方活动" : "官方节点"}</span></div>
+              <div class="cadence-fact"><strong>${annualForecast ? `${monthDay(annualForecast.estimatedNextWindow.start)} - ${monthDay(annualForecast.estimatedNextWindow.end)}` : "待预测"}</strong><span>年度发布预测</span></div>
+            </div>
+            <div class="cadence-dates">
+              ${officialNext ? `<a class="source-link" href="${officialNext.url}" target="_blank" rel="noreferrer">官方说明活动</a>` : ""}
+              ${correctionForecast ? `<span class="trend-chip down">${escapeHtml(monthDay(correctionForecast.estimatedNextWindow.start))} - ${escapeHtml(monthDay(correctionForecast.estimatedNextWindow.end))} 修正观察</span>` : ""}
+            </div>
+          </article>
+        `;
       }
 
       function renderJcrImpact(metrics) {
@@ -1405,6 +1558,7 @@
         const metrics = topicBundles.flatMap((bundle) => bundle.metrics);
         renderStats(items, metrics);
         renderRails(items, metrics);
+        renderJcrCadence(items);
         renderTimeline(items);
         renderJcrImpact(metrics);
         const journalProfiles = buildJournalProfiles(metrics);
