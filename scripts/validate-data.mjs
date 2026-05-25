@@ -142,10 +142,13 @@ function validateMetric(metric, topicId, file, index) {
   if (metric.metric === "cas_major_zone") {
     const zone = Number(metric.value);
     if (!Number.isInteger(zone) || zone < 1 || zone > 4) errors.push(`${label} invalid CAS major zone ${metric.value}`);
-    requireFields(metric, ["journalTitle", "issn", "casVersion", "majorCategory"], label);
+    requireFields(metric, ["journalTitle", "casVersion", "majorCategory"], label);
     if (metric.minorZone !== undefined && metric.minorZone !== null && metric.minorZone !== "") {
       const minorZone = Number(metric.minorZone);
       if (!Number.isInteger(minorZone) || minorZone < 1 || minorZone > 4) errors.push(`${label} invalid CAS minor zone ${metric.minorZone}`);
+    }
+    if (metric.isTop !== undefined && metric.isTop !== null && typeof metric.isTop !== "boolean") {
+      errors.push(`${label} invalid CAS TOP marker ${metric.isTop}`);
     }
   }
   scan(metric, label);

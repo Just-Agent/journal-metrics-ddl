@@ -6,7 +6,6 @@ const outputFile = new URL("../data/topics/cas-partition-ddl/metrics.json", impo
 const replaceAllImported = process.env.CAS_IMPORT_REPLACE_ALL === "1";
 const requiredColumns = [
   "journalTitle",
-  "issn",
   "year",
   "version",
   "majorCategory",
@@ -77,14 +76,18 @@ function buildMetric(row) {
   }
   assertUrl(row.url, `${row.journalTitle}.url`);
 
-  const journalId = slug(`${row.journalTitle}-${row.issn}`);
+  const topValue = String(row.isTop || row.top || "").trim();
+  if (topValue && !["yes", "no", "true", "false", "是", "否", "1", "0"].includes(topValue.toLowerCase())) {
+    throw new Error(`${row.journalTitle} invalid isTop ${topValue}`);
+  }
+  const journalId = slug(row.issn ? `${row.journalTitle}-${row.issn}` : row.journalTitle);
   return {
     id: `cas-${journalId}-${year}-${slug(row.majorCategory)}`,
     topicId: "cas-partition-ddl",
     type: "metricSnapshot",
     journalId,
     journalTitle: row.journalTitle,
-    issn: row.issn,
+    issn: row.issn || "",
     metric: "cas_major_zone",
     value: majorZone,
     year,
@@ -96,7 +99,8 @@ function buildMetric(row) {
     casVersion: row.version,
     majorCategory: row.majorCategory,
     minorCategory: row.minorCategory || "",
-    minorZone: row.minorZone ? Number(row.minorZone) : null
+    minorZone: row.minorZone ? Number(row.minorZone) : null,
+    isTop: topValue ? ["yes", "true", "是", "1"].includes(topValue.toLowerCase()) : null
   };
 }
 

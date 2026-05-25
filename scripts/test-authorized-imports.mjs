@@ -105,6 +105,25 @@ Journal of Test AI,1234-5678,2024,2024 CAS,"Computer Science, Artificial Intelli
   assert(imported.value === 1 && imported.minorZone === 1, "CAS import did not preserve major/minor zone values");
 }
 
+function testCasTitleOnlyImport() {
+  restoreOriginal(casMetricsFile);
+  const titleOnlyCsv = writeFixture(
+    "cas-title-only.csv",
+    `
+journalTitle,year,version,majorCategory,majorZone,isTop,source,url
+Journal Without CAS ISSN,2026,2026 CAS authorized import,授权导入清单,2,是,Authorized CAS workbook,https://www.fenqubiao.com/
+`
+  );
+
+  runNodeScript("scripts/import-cas-history.mjs", { CAS_HISTORY_CSV: titleOnlyCsv });
+  const imported = readJson(casMetricsFile).filter((metric) => metric.journalTitle === "Journal Without CAS ISSN" && metric.year === 2026);
+
+  assert(imported.length === 1, "CAS title-only import should create one zone metric");
+  assert(imported[0].issn === "", "CAS title-only import should not fake an ISSN");
+  assert(imported[0].majorCategory === "授权导入清单", "CAS title-only import should use the provided fallback category");
+  assert(imported[0].isTop === true, "CAS title-only import should preserve the TOP marker");
+}
+
 function testJcrMultiCategoryImport() {
   restoreOriginal(jcrMetricsFile);
   const jcrCsv = writeFixture(
@@ -168,6 +187,7 @@ Journal Without ISSN,2025,8.765,2025 JCR,Authorized local workbook,https://jcr.c
 
 try {
   testCasImportKeepsExistingMetrics();
+  testCasTitleOnlyImport();
   testJcrMultiCategoryImport();
   testJcrConflictingJifFails();
   testJcrTitleOnlyImport();
