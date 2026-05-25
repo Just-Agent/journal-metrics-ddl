@@ -502,6 +502,13 @@
         border: 1px solid var(--line);
         border-radius: 22px;
         background: rgba(255, 255, 255, 0.92);
+        cursor: pointer;
+        text-align: left;
+      }
+
+      .lookup-card.active {
+        border-color: #38bdf8;
+        box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.12), var(--shadow);
       }
 
       .lookup-card h3 {
@@ -553,6 +560,121 @@
         color: var(--muted);
         background: #f8fbff;
         font-weight: 800;
+      }
+
+      .profile-panel {
+        display: grid;
+        gap: 14px;
+        margin-top: 16px;
+        padding: 20px;
+        border: 1px solid #cfe7fb;
+        border-radius: 26px;
+        background:
+          linear-gradient(135deg, rgba(255,255,255,.97), rgba(239,250,255,.94)),
+          #fff;
+        box-shadow: var(--shadow);
+      }
+
+      .profile-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .profile-head h3 {
+        margin: 6px 0 8px;
+        font-size: 28px;
+        line-height: 1.15;
+      }
+
+      .profile-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .profile-fact {
+        padding: 14px;
+        border: 1px solid #dbeafe;
+        border-radius: 18px;
+        background: #fff;
+      }
+
+      .profile-fact strong {
+        display: block;
+        font-size: 22px;
+        line-height: 1.1;
+      }
+
+      .profile-fact span {
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 850;
+      }
+
+      .profile-columns {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
+        gap: 14px;
+      }
+
+      .profile-box {
+        padding: 16px;
+        border: 1px solid #e2edf8;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, .82);
+      }
+
+      .profile-box h4 {
+        margin: 0 0 12px;
+        font-size: 18px;
+      }
+
+      .profile-bars {
+        display: grid;
+        gap: 9px;
+      }
+
+      .profile-bar-row {
+        display: grid;
+        grid-template-columns: 78px minmax(0, 1fr) 76px;
+        gap: 8px;
+        align-items: center;
+        color: var(--muted);
+        font-weight: 850;
+      }
+
+      .profile-bar-track {
+        height: 10px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #e5edf7;
+      }
+
+      .profile-bar-fill {
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--teal), var(--blue));
+      }
+
+      .status-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .status-item {
+        padding: 12px;
+        border: 1px solid #edf2f8;
+        border-radius: 16px;
+        background: #fbfdff;
+      }
+
+      .status-item strong {
+        display: block;
+        margin-bottom: 4px;
       }
 
       .journal-cover {
@@ -684,7 +806,9 @@
         .grid,
         .jcr-impact-grid,
         .journal-grid,
-        .lookup-grid {
+        .lookup-grid,
+        .profile-grid,
+        .profile-columns {
           grid-template-columns: 1fr;
         }
 
@@ -786,6 +910,7 @@
             <span class="query-count" id="journalSearchCount">0 本期刊</span>
           </div>
           <div class="lookup-grid" id="journalExplorer"></div>
+          <div class="profile-panel" id="journalProfileDetail"></div>
         </div>
       </section>
 
@@ -843,6 +968,16 @@
       function formatNumber(value) {
         if (typeof value !== "number") return value;
         return new Intl.NumberFormat("en-US").format(value);
+      }
+
+      function escapeHtml(value) {
+        return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;"
+        }[char]));
       }
 
       function classify(item) {
@@ -941,6 +1076,8 @@
           };
         }).sort((a, b) => a.title.localeCompare(b.title, "zh-CN"));
       }
+
+      let activeJournalKey = "";
 
       function renderStats(items, metrics) {
         const official = items.filter((item) => item.type === "officialDeadline").length;
@@ -1091,23 +1228,26 @@
           ].filter(Boolean).some((value) => String(value).toLowerCase().includes(needle));
         });
         const visible = filtered.slice(0, needle ? 12 : 6);
+        const selected = visible.find((profile) => profile.key === activeJournalKey) || visible[0] || null;
+        activeJournalKey = selected?.key || "";
         document.querySelector("#journalSearchCount").textContent = `${filtered.length} 本期刊`;
         const target = document.querySelector("#journalExplorer");
         if (!visible.length) {
           target.innerHTML = `<div class="empty-result">暂未命中。可以先从 watchlist 里的 Nature、Science、Cell、TPAMI、JMLR、The Lancet 等期刊开始搜索。</div>`;
+          document.querySelector("#journalProfileDetail").innerHTML = "";
           return;
         }
         target.innerHTML = visible.map((profile) => {
           const trend = profile.trend;
           const source = profile.total || profile.complete || profile.ytd || profile.latestJif || profile.latestCas;
           return `
-            <article class="lookup-card">
-              <span class="pill">${profile.issn || "Journal"}</span>
-              <h3>${profile.title}</h3>
+            <article class="lookup-card ${profile.key === activeJournalKey ? "active" : ""}" data-journal-key="${escapeHtml(profile.key)}">
+              <span class="pill">${escapeHtml(profile.issn || "Journal")}</span>
+              <h3>${escapeHtml(profile.title)}</h3>
               <div class="meta">
                 ${trend ? `<span class="trend-chip ${trend.kind}">${trend.label}</span>` : "<span>趋势待补充</span>"}
-                ${profile.latestQuartile ? `<span>${profile.latestQuartile.category || "JCR"} ${profile.latestQuartile.value}</span>` : "<span>JCR 待授权导入</span>"}
-                ${profile.latestCas ? `<span>CAS ${profile.latestCas.value} 区</span>` : "<span>CAS 待授权导入</span>"}
+                ${profile.latestQuartile ? `<span>${escapeHtml(profile.latestQuartile.category || "JCR")} ${escapeHtml(profile.latestQuartile.value)}</span>` : "<span>JCR 待授权导入</span>"}
+                ${profile.latestCas ? `<span>CAS ${escapeHtml(profile.latestCas.value)} 区</span>` : "<span>CAS 待授权导入</span>"}
               </div>
               <div class="lookup-values">
                 <div class="lookup-value">
@@ -1131,6 +1271,79 @@
             </article>
           `;
         }).join("");
+        renderJournalProfile(selected);
+        document.querySelectorAll("[data-journal-key]").forEach((card) => {
+          card.addEventListener("click", () => {
+            activeJournalKey = card.dataset.journalKey;
+            renderJournalExplorer(profiles, document.querySelector("#journalSearch").value);
+          });
+        });
+      }
+
+      function renderJournalProfile(profile) {
+        const target = document.querySelector("#journalProfileDetail");
+        if (!profile) {
+          target.innerHTML = "";
+          return;
+        }
+        const yearly = profile.yearly || [];
+        const max = Math.max(...yearly.map((row) => Number(row.value)), 1);
+        const latestJifRows = profile.jcrRows
+          .filter((row) => row.metric === "journal_impact_factor")
+          .sort((a, b) => Number(b.year || 0) - Number(a.year || 0));
+        const quartileRows = profile.jcrRows
+          .filter((row) => row.metric === "jcr_quartile")
+          .sort((a, b) => Number(b.year || 0) - Number(a.year || 0));
+        const casRows = profile.casRows.sort((a, b) => Number(b.year || 0) - Number(a.year || 0));
+        const source = profile.total || profile.complete || profile.ytd || latestJifRows[0] || casRows[0];
+        const trend = profile.trend;
+        target.innerHTML = `
+          <div class="profile-head">
+            <div>
+              <span class="pill">${escapeHtml(profile.issn || "Journal profile")}</span>
+              <h3>${escapeHtml(profile.title)}</h3>
+              <p class="small-label">单刊剖面使用公开 OpenAlex 快照；JCR 影响因子和 CAS 分区轨迹只在合规授权导入后显示。</p>
+            </div>
+            ${source?.url ? `<a class="source-link" href="${source.url}" target="_blank" rel="noreferrer">打开来源</a>` : ""}
+          </div>
+          <div class="profile-grid">
+            <div class="profile-fact"><strong>${formatNumber(Number(profile.total?.value || 0))}</strong><span>OpenAlex total</span></div>
+            <div class="profile-fact"><strong>${profile.complete ? formatNumber(Number(profile.complete.value)) : "-"}</strong><span>${profile.complete ? `${profile.complete.year} 完整年` : "最新完整年"}</span></div>
+            <div class="profile-fact"><strong>${profile.ytd ? formatNumber(Number(profile.ytd.value)) : "-"}</strong><span>${profile.ytd ? `${profile.ytd.year} YTD` : "当前年 YTD"}</span></div>
+            <div class="profile-fact"><strong>${trend ? trend.label : "待观察"}</strong><span>${trend ? trend.text : "完整年趋势"}</span></div>
+          </div>
+          <div class="profile-columns">
+            <section class="profile-box">
+              <h4>近年发文量轨迹</h4>
+              <div class="profile-bars">
+                ${yearly.slice(0, 6).map((row) => `
+                  <div class="profile-bar-row">
+                    <span>${escapeHtml(yearLabel(row))}</span>
+                    <div class="profile-bar-track"><div class="profile-bar-fill" style="width:${Math.max(4, Math.round(Number(row.value) / max * 100))}%"></div></div>
+                    <span>${formatNumber(row.value)}</span>
+                  </div>
+                `).join("") || `<p class="small-label">暂无年度发文量快照。</p>`}
+              </div>
+            </section>
+            <section class="profile-box">
+              <h4>JCR / CAS 轨迹状态</h4>
+              <div class="status-list">
+                <div class="status-item">
+                  <strong>JIF 轨迹</strong>
+                  <span class="small-label">${latestJifRows.length ? `${latestJifRows.length} 条授权导入记录，最新 ${latestJifRows[0].year}: ${formatNumber(Number(latestJifRows[0].value))}` : "待授权导入；公开版不抓取登录系统明细。"}</span>
+                </div>
+                <div class="status-item">
+                  <strong>JCR Quartile</strong>
+                  <span class="small-label">${quartileRows.length ? `${quartileRows.length} 条授权导入记录，最新 ${quartileRows[0].year}: ${escapeHtml(quartileRows[0].category || "JCR")} ${escapeHtml(quartileRows[0].value)}` : "待授权导入；导入后显示类别、Quartile 和年份。"}</span>
+                </div>
+                <div class="status-item">
+                  <strong>CAS 分区</strong>
+                  <span class="small-label">${casRows.length ? `${casRows.length} 条授权导入记录，最新 ${casRows[0].year}: ${escapeHtml(casRows[0].majorCategory || "大类")} ${escapeHtml(casRows[0].value)} 区` : "待授权导入；2026 起官方分区发布轨道已单独标注停更状态。"}</span>
+                </div>
+              </div>
+            </section>
+          </div>
+        `;
       }
 
       function renderJournals(metrics) {
@@ -1197,6 +1410,7 @@
         const journalProfiles = buildJournalProfiles(metrics);
         renderJournalExplorer(journalProfiles);
         document.querySelector("#journalSearch").addEventListener("input", (event) => {
+          activeJournalKey = "";
           renderJournalExplorer(journalProfiles, event.target.value);
         });
         renderJournals(metrics);
