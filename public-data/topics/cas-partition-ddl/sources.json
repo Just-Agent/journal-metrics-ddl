@@ -11,8 +11,7 @@
         "不再更新",
         "期刊分区表",
         "声明"
-      ],
-      "refreshCadence": "manual"
+      ]
     },
     {
       "sourceLabel": "人工核验来源",
@@ -23,8 +22,7 @@
       "markers": [
         "期刊分区表",
         "查询"
-      ],
-      "refreshCadence": "manual"
+      ]
     }
   ]
 }

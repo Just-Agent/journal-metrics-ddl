@@ -133,11 +133,11 @@ function validateMetric(metric, topicId, file, index) {
   }
   if (metric.metric === "journal_impact_factor") {
     if (!Number.isFinite(Number(metric.value)) || Number(metric.value) < 0) errors.push(`${label} invalid Journal Impact Factor ${metric.value}`);
-    requireFields(metric, ["journalTitle", "issn", "category", "jcrEdition"], label);
+    requireFields(metric, ["journalTitle", "category", "jcrEdition"], label);
   }
   if (metric.metric === "jcr_quartile") {
     if (!["Q1", "Q2", "Q3", "Q4"].includes(String(metric.value).toUpperCase())) errors.push(`${label} invalid JCR quartile ${metric.value}`);
-    requireFields(metric, ["journalTitle", "issn", "category", "jcrEdition"], label);
+    requireFields(metric, ["journalTitle", "category", "jcrEdition"], label);
   }
   if (metric.metric === "cas_major_zone") {
     const zone = Number(metric.value);

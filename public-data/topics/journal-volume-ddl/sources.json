@@ -11,8 +11,7 @@
         "works_count",
         "counts_by_year",
         "source"
-      ],
-      "refreshCadence": "weekly"
+      ]
     },
     {
       "sourceLabel": "公开来源",
@@ -24,8 +23,7 @@
         "works",
         "filter",
         "ISSN"
-      ],
-      "refreshCadence": "planned"
+      ]
     }
   ]
 }

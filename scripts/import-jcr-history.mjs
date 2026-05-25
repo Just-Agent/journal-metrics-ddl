@@ -6,11 +6,8 @@ const outputFile = new URL("../data/topics/jcr-impact-factor-ddl/metrics.json", 
 const replaceAllImported = process.env.JCR_IMPORT_REPLACE_ALL === "1";
 const requiredColumns = [
   "journalTitle",
-  "issn",
   "jcrYear",
   "jif",
-  "category",
-  "quartile",
   "source",
   "url"
 ];
@@ -70,10 +67,10 @@ function readExistingMetrics() {
 function validateRow(row) {
   const year = Number(row.jcrYear);
   const jif = Number(row.jif);
-  const quartile = String(row.quartile).toUpperCase();
+  const quartile = String(row.quartile || "").toUpperCase();
   if (!Number.isInteger(year) || year < 2000) throw new Error(`${row.journalTitle} invalid jcrYear ${row.jcrYear}`);
   if (!Number.isFinite(jif) || jif < 0) throw new Error(`${row.journalTitle} invalid jif ${row.jif}`);
-  if (!["Q1", "Q2", "Q3", "Q4"].includes(quartile)) throw new Error(`${row.journalTitle} invalid quartile ${row.quartile}`);
+  if (quartile && !["Q1", "Q2", "Q3", "Q4"].includes(quartile)) throw new Error(`${row.journalTitle} invalid quartile ${row.quartile}`);
   if (row.totalJournals && (!Number.isInteger(Number(row.totalJournals)) || Number(row.totalJournals) <= 0)) {
     throw new Error(`${row.journalTitle} invalid totalJournals ${row.totalJournals}`);
   }
@@ -82,20 +79,20 @@ function validateRow(row) {
 }
 
 function baseMetric(row, year) {
-  const journalId = slug(`${row.journalTitle}-${row.issn}`);
+  const journalId = slug(row.issn ? `${row.journalTitle}-${row.issn}` : row.journalTitle);
   return {
     topicId: "jcr-impact-factor-ddl",
     type: "metricSnapshot",
     journalId,
     journalTitle: row.journalTitle,
-    issn: row.issn,
+    issn: row.issn || "",
     year,
     source: row.source,
     url: row.url,
     sourceUrl: row.url,
     accessMode: "licensed_import",
     licenseNote: "单刊影响因子、JIF quartile 和类别排名来自机构授权文件或有权限账号导出。",
-    category: row.category,
+    category: row.category || "授权导入清单",
     jcrEdition: row.edition || `${year} JCR`,
     rank: row.rank || "",
     totalJournals: row.totalJournals ? Number(row.totalJournals) : null
@@ -126,13 +123,15 @@ function buildImportedMetrics(rows) {
       imported.push(metric);
     }
 
-    imported.push({
-      ...base,
-      id: `jcr-${base.journalId}-${year}-quartile-${slug(row.category)}`,
-      metric: "jcr_quartile",
-      value: quartile,
-      scopeNote: `${base.jcrEdition} ${row.category} JIF quartile 导入记录；公开仓库不绕过 JCR 权限抓取。`
-    });
+    if (quartile) {
+      imported.push({
+        ...base,
+        id: `jcr-${base.journalId}-${year}-quartile-${slug(base.category)}`,
+        metric: "jcr_quartile",
+        value: quartile,
+        scopeNote: `${base.jcrEdition} ${base.category} JIF quartile 导入记录；公开仓库不绕过 JCR 权限抓取。`
+      });
+    }
   }
 
   return imported;

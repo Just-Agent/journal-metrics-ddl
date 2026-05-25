@@ -1332,7 +1332,7 @@
         const cards = [...grouped.entries()].map(([key, group]) => {
           const title = group[0]?.journalTitle || key;
           const category = group[0]?.category || "JCR category";
-          const issn = group[0]?.issn || "ISSN";
+          const issn = group[0]?.issn || "ISSN 待补充";
           const years = [...new Set(group.map((row) => Number(row.year)).filter(Boolean))].sort((a, b) => b - a);
           const latestYear = years[0];
           const latestJif = group.find((row) => row.metric === "journal_impact_factor" && Number(row.year) === latestYear);

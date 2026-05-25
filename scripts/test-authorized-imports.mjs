@@ -145,10 +145,32 @@ Journal of Conflict AI,9999-0000,2024,6.000,"Computer Science, Information Syste
   assert(output.includes("conflicting JIF values"), "JCR conflict test failed for the wrong reason");
 }
 
+function testJcrTitleOnlyImport() {
+  restoreOriginal(jcrMetricsFile);
+  const titleOnlyCsv = writeFixture(
+    "jcr-title-only.csv",
+    `
+journalTitle,jcrYear,jif,edition,source,url
+Journal Without ISSN,2025,8.765,2025 JCR,Authorized local workbook,https://jcr.clarivate.com/jcr/home
+`
+  );
+
+  runNodeScript("scripts/import-jcr-history.mjs", { JCR_HISTORY_CSV: titleOnlyCsv });
+  const imported = readJson(jcrMetricsFile).filter((metric) => metric.journalTitle === "Journal Without ISSN" && metric.year === 2025);
+  const jifMetrics = imported.filter((metric) => metric.metric === "journal_impact_factor");
+  const quartileMetrics = imported.filter((metric) => metric.metric === "jcr_quartile");
+
+  assert(jifMetrics.length === 1, "JCR title-only import should create one JIF metric");
+  assert(jifMetrics[0].issn === "", "JCR title-only import should not fake an ISSN");
+  assert(jifMetrics[0].category === "授权导入清单", "JCR title-only import should use the default category");
+  assert(quartileMetrics.length === 0, "JCR title-only import should not invent quartile metrics");
+}
+
 try {
   testCasImportKeepsExistingMetrics();
   testJcrMultiCategoryImport();
   testJcrConflictingJifFails();
+  testJcrTitleOnlyImport();
   console.log("authorized CAS/JCR import smoke tests passed");
 } finally {
   restoreAll();
