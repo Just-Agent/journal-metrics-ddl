@@ -78,10 +78,17 @@ $env:JCR_IMPORT_REPLACE_ALL='1'
 npm run import:jcr-history
 ```
 
+导入真实授权 CSV 前建议先跑一次冒烟测试，确认本地环境不会破坏增量导入、多类别期刊和带逗号的 JCR/CAS 分类字段：
+
+```powershell
+npm run test:imports
+```
+
 ## Commands
 
 ```powershell
 npm run crawl
+npm run test:imports
 npm run validate
 npm run export:public
 npm run validate:public
