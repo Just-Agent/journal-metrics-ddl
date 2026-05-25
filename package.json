@@ -7,12 +7,13 @@
     "crawl": "node scripts/crawl-sources.mjs",
     "import:cas-history": "node scripts/import-cas-history.mjs",
     "import:jcr-history": "node scripts/import-jcr-history.mjs",
+    "test:crawler": "node scripts/test-crawler-openalex.mjs",
     "test:imports": "node scripts/test-authorized-imports.mjs",
     "forecast:audit": "node scripts/audit-forecasts.mjs",
     "validate": "node scripts/validate-data.mjs",
     "export:public": "node scripts/export-public-data.mjs",
     "validate:public": "node scripts/validate-public-data.mjs",
-    "build": "npm run test:imports && npm run forecast:audit && npm run validate && npm run export:public && npm run validate:public",
+    "build": "npm run test:crawler && npm run test:imports && npm run forecast:audit && npm run validate && npm run export:public && npm run validate:public",
     "link-check": "node scripts/link-check.mjs"
   }
 }

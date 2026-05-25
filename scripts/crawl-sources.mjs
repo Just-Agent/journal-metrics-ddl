@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import { pathToFileURL } from "node:url";
 
 const topicsRoot = new URL("../data/topics/", import.meta.url);
 const dataRoot = new URL("../data/", import.meta.url);
@@ -118,7 +119,48 @@ function buildOpenAlexMetric({ journal, source, metric, value, year, asOfDate, s
   };
 }
 
-async function crawlOpenAlexJournalVolume() {
+export function buildOpenAlexMetricsForJournal({ journal, source, currentYear, asOfDate, apiUrl }) {
+  const counts = Array.isArray(source.counts_by_year) ? source.counts_by_year : [];
+  const metrics = [
+    buildOpenAlexMetric({
+      journal,
+      source,
+      metric: "openalex_works_count_total",
+      value: source.works_count,
+      asOfDate,
+      scopeNote: "OpenAlex Source object works_count total; this is open metadata coverage and is not equivalent to WoS/JCR article counts.",
+      extra: {
+        homepageUrl: source.homepage_url || null,
+        citedByCount: source.cited_by_count ?? null,
+        apiUrl
+      }
+    })
+  ];
+
+  for (const year of [currentYear, currentYear - 1, currentYear - 2, currentYear - 3, currentYear - 4]) {
+    const row = counts.find((entry) => Number(entry.year) === year);
+    if (!row) continue;
+    metrics.push(buildOpenAlexMetric({
+      journal,
+      source,
+      metric: "openalex_works_count_by_year",
+      value: row.works_count,
+      year,
+      asOfDate,
+      scopeNote: `OpenAlex counts_by_year works_count for ${year}; coverage may lag publisher sites and differs from WoS/JCR counting rules.`,
+      extra: {
+        yearCompleteness: year === currentYear ? "partial_ytd" : "complete_observed",
+        oaWorksCount: row.oa_works_count ?? null,
+        citedByCount: row.cited_by_count ?? null,
+        apiUrl
+      }
+    }));
+  }
+
+  return metrics;
+}
+
+export async function crawlOpenAlexJournalVolume() {
   if (!shouldProcess("journal-volume-ddl")) return;
 
   const watchlistFile = new URL("journal-watchlist.json", dataRoot);
@@ -133,41 +175,13 @@ async function crawlOpenAlexJournalVolume() {
     const apiUrl = `https://api.openalex.org/sources/issn:${encodeURIComponent(journal.issn)}`;
     try {
       const source = await fetchWithJson(apiUrl);
-      const counts = Array.isArray(source.counts_by_year) ? source.counts_by_year : [];
-
-      metrics.push(buildOpenAlexMetric({
+      metrics.push(...buildOpenAlexMetricsForJournal({
         journal,
         source,
-        metric: "openalex_works_count_total",
-        value: source.works_count,
+        currentYear,
         asOfDate: report.generatedAt.slice(0, 10),
-        scopeNote: "OpenAlex Source object works_count total; this is open metadata coverage and is not equivalent to WoS/JCR article counts.",
-        extra: {
-          homepageUrl: source.homepage_url || null,
-          citedByCount: source.cited_by_count ?? null,
-          apiUrl
-        }
+        apiUrl
       }));
-
-      for (const year of [currentYear, currentYear - 1, currentYear - 2, currentYear - 3, currentYear - 4]) {
-        const row = counts.find((entry) => Number(entry.year) === year);
-        if (!row) continue;
-        metrics.push(buildOpenAlexMetric({
-          journal,
-          source,
-          metric: "openalex_works_count_by_year",
-          value: row.works_count,
-          year,
-          asOfDate: report.generatedAt.slice(0, 10),
-          scopeNote: `OpenAlex counts_by_year works_count for ${year}; coverage may lag publisher sites and differs from WoS/JCR counting rules.`,
-          extra: {
-            yearCompleteness: year === currentYear ? "partial_ytd" : "complete_observed",
-            oaWorksCount: row.oa_works_count ?? null,
-            citedByCount: row.cited_by_count ?? null,
-            apiUrl
-          }
-        }));
-      }
     } catch (error) {
       report.openAlex.failures.push({
         journalId: journal.id,
@@ -190,23 +204,29 @@ async function crawlOpenAlexJournalVolume() {
   }
 }
 
-for (const dirent of fs.readdirSync(topicsRoot, { withFileTypes: true })) {
-  if (!dirent.isDirectory()) continue;
-  const topicId = dirent.name;
-  if (!shouldProcess(topicId)) continue;
-  const sourcesFile = new URL(`${topicId}/sources.json`, topicsRoot);
-  if (!fs.existsSync(sourcesFile)) continue;
-  const sources = readJson(sourcesFile);
-  const sourceReports = [];
+export async function main() {
+  for (const dirent of fs.readdirSync(topicsRoot, { withFileTypes: true })) {
+    if (!dirent.isDirectory()) continue;
+    const topicId = dirent.name;
+    if (!shouldProcess(topicId)) continue;
+    const sourcesFile = new URL(`${topicId}/sources.json`, topicsRoot);
+    if (!fs.existsSync(sourcesFile)) continue;
+    const sources = readJson(sourcesFile);
+    const sourceReports = [];
 
-  for (const source of sources.sourceFamilies || []) {
-    sourceReports.push(await checkSourceReachability(source));
+    for (const source of sources.sourceFamilies || []) {
+      sourceReports.push(await checkSourceReachability(source));
+    }
+
+    report.topics.push({ topicId, sources: sourceReports });
   }
 
-  report.topics.push({ topicId, sources: sourceReports });
+  await crawlOpenAlexJournalVolume();
+
+  writeJson(reportFile, report);
+  console.log(`wrote crawl report for ${report.topics.length} topics; ${report.openAlex.writtenMetrics} OpenAlex metrics`);
 }
 
-await crawlOpenAlexJournalVolume();
-
-writeJson(reportFile, report);
-console.log(`wrote crawl report for ${report.topics.length} topics; ${report.openAlex.writtenMetrics} OpenAlex metrics`);
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  await main();
+}
