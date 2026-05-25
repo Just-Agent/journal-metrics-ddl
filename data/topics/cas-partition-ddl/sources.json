@@ -8,20 +8,57 @@
       "type": "official",
       "accessMode": "public",
       "parser": "cas-las-statement",
-      "markers": ["不再更新", "期刊分区表", "声明"],
+      "markers": [
+        "不再更新",
+        "期刊分区表",
+        "声明"
+      ],
       "refreshCadence": "manual",
       "coverageNote": "用于确认 2026 起停更和官方授权边界。"
     },
     {
       "id": "cas-partition-platform",
-      "name": "中科院期刊分区表在线平台",
-      "url": "https://www.fenqubiao.com/",
+      "name": "中科院期刊分区表在线平台帮助页",
+      "url": "https://www.fenqubiao.com/User/Help.aspx",
       "type": "official-platform",
       "accessMode": "manual_verified",
-      "parser": "licensed-or-institutional-access",
-      "markers": ["期刊分区表", "查询"],
+      "parser": "manual-verified-help-page",
+      "markers": [
+        "期刊分区表",
+        "查询",
+        "使用帮助"
+      ],
       "refreshCadence": "manual",
-      "coverageNote": "详细期刊分区数据涉及平台访问、机构授权或历史数据导入，不在公开 crawler 中绕过权限抓取。"
+      "coverageNote": "用于确认平台查询入口、发布沿革和使用边界；不绕过权限抓取单刊分区明细。"
+    },
+    {
+      "id": "cas-partition-data-introduction",
+      "name": "中科院期刊分区表数据来源说明",
+      "url": "https://www.fenqubiao.com/User/DataIntroduction.aspx",
+      "type": "official-platform",
+      "accessMode": "manual_verified",
+      "parser": "manual-verified-data-source-page",
+      "markers": [
+        "数据来源",
+        "期刊分区表"
+      ],
+      "refreshCadence": "manual",
+      "coverageNote": "用于解释 CAS 分区导入数据的来源口径；详细单刊轨迹仍需授权导入。"
+    },
+    {
+      "id": "cas-partition-use-protocol",
+      "name": "中科院期刊分区表在线平台使用协议",
+      "url": "https://www.fenqubiao.com/User/UseProtocol.aspx",
+      "type": "official-platform",
+      "accessMode": "manual_verified",
+      "parser": "manual-verified-use-protocol-page",
+      "markers": [
+        "使用协议",
+        "授权",
+        "期刊分区表"
+      ],
+      "refreshCadence": "manual",
+      "coverageNote": "用于说明授权导入和平台使用边界；公开仓库不抓取受限明细。"
     }
   ]
 }

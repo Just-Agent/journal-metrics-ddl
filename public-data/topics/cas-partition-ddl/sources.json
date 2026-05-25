@@ -16,12 +16,36 @@
     {
       "sourceLabel": "人工核验来源",
       "id": "cas-partition-platform",
-      "name": "中科院期刊分区表在线平台",
-      "url": "https://www.fenqubiao.com/",
+      "name": "中科院期刊分区表在线平台帮助页",
+      "url": "https://www.fenqubiao.com/User/Help.aspx",
       "type": "official-platform",
       "markers": [
         "期刊分区表",
-        "查询"
+        "查询",
+        "使用帮助"
+      ]
+    },
+    {
+      "sourceLabel": "人工核验来源",
+      "id": "cas-partition-data-introduction",
+      "name": "中科院期刊分区表数据来源说明",
+      "url": "https://www.fenqubiao.com/User/DataIntroduction.aspx",
+      "type": "official-platform",
+      "markers": [
+        "数据来源",
+        "期刊分区表"
+      ]
+    },
+    {
+      "sourceLabel": "人工核验来源",
+      "id": "cas-partition-use-protocol",
+      "name": "中科院期刊分区表在线平台使用协议",
+      "url": "https://www.fenqubiao.com/User/UseProtocol.aspx",
+      "type": "official-platform",
+      "markers": [
+        "使用协议",
+        "授权",
+        "期刊分区表"
       ]
     }
   ]
