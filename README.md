@@ -6,6 +6,7 @@
 
 - `cas-partition-ddl`：中科院期刊分区表发布沿革、停更声明、历史查询与授权导入边界。
 - `jcr-impact-factor-ddl`：JCR 年度发布时间、10 月后续修正/数据 reload 节点、影响因子授权导入边界。
+- `google-scholar-metrics-ddl`：Google Scholar Metrics 年度发布节奏、期刊与会议 h5-index / h5-median 公开快照。
 - `journal-volume-ddl`：用开放元数据统计代表期刊发文量、年度发文趋势和最新完整年同比变化。
 
 ## 为什么要分轨
@@ -14,6 +15,7 @@
 
 - JCR 今年什么时候发布，过去几年是否稳定在 6 月下旬，10 月是否有后续修正。
 - 某本期刊影响因子和 quartile 这些年怎么变化。
+- Google Scholar Metrics 什么时候更新，哪些期刊和会议在 h5-index / h5-median 上变化明显。
 - 中科院分区历史如何变化，2026 停更后怎么处理往年数据，以及如何合规导入单刊分区轨迹。
 - 期刊当前发文量是否扩张/收缩，统计口径来自哪里。
 
@@ -21,7 +23,7 @@
 
 - `officialDeadline`：官方发布会、官方版本或可确认未来节点。
 - `historyEvent`：JCR 发布、CAS 停更声明、历史版本节点。
-- `metricSnapshot`：指标快照，例如 JCR 收录总量、OpenAlex works_count、期刊年发文量。
+- `metricSnapshot`：指标快照，例如 JCR 收录总量、OpenAlex works_count、期刊年发文量、Google Scholar h5-index / h5-median；不同指标必须标明口径，不能混称为影响因子。
 - `forecastWindow`：仅作为趋势提示，不能当成官方日期。
 
 ## 数据边界
@@ -33,6 +35,7 @@
 - 当前日历年发文量必须标成 YTD 快照，只能用于“截至当前抓取日”的观察；扩张/收缩趋势只比较已完整结束的年份。
 - 首批发文量 watchlist 已扩展到 42 本综合、医学、AI、计算机、图形学、NLP、医学影像、数据管理、软件工程和机器人代表期刊，后续可以继续按学科扩展。
 - JCR 轨迹首版覆盖 2021-2025 年 6 月年度发布记录与 2021-2025 年 10 月 Data Reload / correction 记录；2026 发布窗口和修正观察窗口均以这些官方历史节点为依据。
+- Google Scholar Metrics 首版覆盖 2023-2025 年官方博客发布节点，并导入 2025 top publications 前 10 条 h5-index / h5-median 快照；2026 只展示 7 月观察窗口，不写成官方发布日期。
 
 ## CAS 授权导入
 

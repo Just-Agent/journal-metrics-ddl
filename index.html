@@ -936,10 +936,11 @@
           <div class="eyebrow">Just-DDL Research Evaluation</div>
           <h1>期刊评价与指标轨迹</h1>
           <p class="lead">
-            追踪 JCR 年度发布、后续修正、中科院分区官方边界，以及开放元数据口径下的期刊发文量。这里把正式 DDL、历史节点、指标快照和预测窗口分开显示，避免把预测误当成官方日期。
+            追踪 JCR 年度发布、后续修正、中科院分区官方边界、Google Scholar Metrics h5 指标，以及开放元数据口径下的期刊发文量。这里把正式 DDL、历史节点、指标快照和预测窗口分开显示，避免把预测误当成官方日期。
           </p>
           <div class="hero-actions">
             <a class="button primary" href="public-data/topics/jcr-impact-factor-ddl/items.json">查看 JCR 数据</a>
+            <a class="button" href="public-data/topics/google-scholar-metrics-ddl/metrics.json">查看 Scholar Metrics</a>
             <a class="button" href="public-data/topics/journal-volume-ddl/metrics.json">查看发文量快照</a>
           </div>
         </div>
@@ -953,9 +954,9 @@
       <section class="section">
         <div class="section-head">
           <div>
-            <span class="pill">三条轨道</span>
+            <span class="pill">四条轨道</span>
             <h2>用户真正关心的不是一个日期</h2>
-            <p>JCR 的发布时间、CAS 分区的历史边界、单刊发文量趋势都需要不同口径。这个专题族先把数据轨道做清楚，后续再接入授权 CSV 或更多开放 API。</p>
+            <p>JCR 的发布时间、CAS 分区的历史边界、Scholar Metrics h5 指标、单刊发文量趋势都需要不同口径。这个专题族先把数据轨道做清楚，后续再接入授权 CSV 或更多开放 API。</p>
           </div>
         </div>
         <div class="grid" id="railCards"></div>
@@ -965,8 +966,8 @@
         <div class="section-head">
           <div>
             <span class="pill">Journal Lookup</span>
-            <h2>查某一本期刊</h2>
-            <p>输入期刊名或 ISSN，查看当前 OpenAlex 发文量、最新完整年趋势；如果后续导入 JCR/CAS 授权 CSV，同一个卡片会直接显示影响因子、Quartile 和中科院分区轨迹。</p>
+            <h2>查某本期刊或会议</h2>
+            <p>输入期刊名、会议名或 ISSN，查看当前 OpenAlex 发文量、最新完整年趋势和 Google Scholar h5 指标；如果后续导入 JCR/CAS 授权 CSV，同一个卡片会直接显示影响因子、Quartile 和中科院分区轨迹。</p>
           </div>
         </div>
         <div class="query-panel">
@@ -988,6 +989,17 @@
           </div>
         </div>
         <div class="cadence-board" id="jcrCadenceBoard"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <span class="pill">Scholar Metrics</span>
+            <h2>期刊与会议 h5 指标</h2>
+            <p>Google Scholar Metrics 同时覆盖期刊和部分会议，适合补充计算机、AI、医学等领域的公开 h5-index / h5-median 观察；它不等同于 JCR 影响因子。</p>
+          </div>
+        </div>
+        <div class="jcr-impact-grid" id="scholarMetricsGrid"></div>
       </section>
 
       <section class="section">
@@ -1029,7 +1041,7 @@
     </main>
 
     <script type="module">
-      const topicIds = ["cas-partition-ddl", "jcr-impact-factor-ddl", "journal-volume-ddl"];
+      const topicIds = ["cas-partition-ddl", "jcr-impact-factor-ddl", "google-scholar-metrics-ddl", "journal-volume-ddl"];
 
       async function json(path) {
         const response = await fetch(path);
@@ -1126,7 +1138,8 @@
               rows: [],
               volumeRows: [],
               jcrRows: [],
-              casRows: []
+              casRows: [],
+              scholarRows: []
             });
           }
           return profileMap.get(key);
@@ -1144,6 +1157,9 @@
             profile.jcrRows.push(metric);
           }
           if (metric.topicId === "cas-partition-ddl" && metric.metric === "cas_major_zone") profile.casRows.push(metric);
+          if (metric.topicId === "google-scholar-metrics-ddl" && ["google_scholar_h5_index", "google_scholar_h5_median"].includes(metric.metric)) {
+            profile.scholarRows.push(metric);
+          }
         }
 
         return [...profileMap.values()].map((profile) => {
@@ -1156,6 +1172,8 @@
           const latestJif = latestByYear(profile.jcrRows.filter((row) => row.metric === "journal_impact_factor"));
           const latestQuartile = latestByYear(profile.jcrRows.filter((row) => row.metric === "jcr_quartile"));
           const latestCas = latestByYear(profile.casRows);
+          const latestScholarH5 = latestByYear(profile.scholarRows.filter((row) => row.metric === "google_scholar_h5_index"));
+          const latestScholarMedian = latestByYear(profile.scholarRows.filter((row) => row.metric === "google_scholar_h5_median"));
           return {
             ...profile,
             total,
@@ -1165,7 +1183,9 @@
             trend: trendFor(yearly),
             latestJif,
             latestQuartile,
-            latestCas
+            latestCas,
+            latestScholarH5,
+            latestScholarMedian
           };
         }).sort((a, b) => a.title.localeCompare(b.title, "zh-CN"));
       }
@@ -1188,6 +1208,7 @@
         const jcr = items.filter((item) => item.topicId === "jcr-impact-factor-ddl");
         const cas = items.filter((item) => item.topicId === "cas-partition-ddl");
         const volume = metrics.filter((metric) => metric.topicId === "journal-volume-ddl");
+        const scholar = metrics.filter((metric) => metric.topicId === "google-scholar-metrics-ddl");
         const cards = [
           {
             label: "JCR",
@@ -1200,6 +1221,12 @@
             title: "中科院分区历史边界",
             text: "公开版记录官方平台、停更声明和授权导入策略；单刊历年分区轨迹需要合规数据源。",
             meta: [`${cas.length} 条节点`, "分区轨迹", "授权数据"]
+          },
+          {
+            label: "Google Scholar",
+            title: "期刊与会议 h5 指标",
+            text: "记录 Scholar Metrics 年度发布节奏，并展示 top publications 的 h5-index / h5-median 快照，补充会议评价视角。",
+            meta: [`${scholar.length} 个快照`, "h5-index", "会议/期刊"]
           },
           {
             label: "Open Metadata",
@@ -1368,6 +1395,54 @@
         target.innerHTML = cards.join("");
       }
 
+      function renderScholarMetrics(metrics) {
+        const rows = metrics.filter((metric) => metric.topicId === "google-scholar-metrics-ddl");
+        const target = document.querySelector("#scholarMetricsGrid");
+        if (!rows.length) {
+          target.innerHTML = `<div class="jcr-empty">Scholar Metrics h5 指标暂未加载。</div>`;
+          return;
+        }
+
+        const grouped = rows.reduce((map, row) => {
+          const key = row.publicationTitle || row.journalTitle || row.id;
+          if (!map.has(key)) map.set(key, []);
+          map.get(key).push(row);
+          return map;
+        }, new Map());
+
+        const cards = [...grouped.entries()]
+          .map(([title, group]) => {
+            const h5 = group.find((row) => row.metric === "google_scholar_h5_index");
+            const median = group.find((row) => row.metric === "google_scholar_h5_median");
+            const source = h5 || median || group[0];
+            return {
+              rank: Number(source.rank || 9999),
+              html: `
+                <article class="jcr-card">
+                  <span class="pill">#${escapeHtml(source.rank || "-")} · ${escapeHtml(source.venueType || "publication")}</span>
+                  <h3>${escapeHtml(title)}</h3>
+                  <p>Google Scholar Metrics ${escapeHtml(source.year || "")} · articles published in 2020-2024</p>
+                  <div class="jcr-values">
+                    <div class="jcr-value">
+                      <strong>${h5 ? formatNumber(Number(h5.value)) : "-"}</strong>
+                      <span>h5-index</span>
+                    </div>
+                    <div class="jcr-value">
+                      <strong>${median ? formatNumber(Number(median.value)) : "-"}</strong>
+                      <span>h5-median</span>
+                    </div>
+                  </div>
+                  <div class="meta"><a class="source-link" href="${source.url}" target="_blank" rel="noreferrer">Google Scholar 来源</a></div>
+                </article>
+              `
+            };
+          })
+          .sort((a, b) => a.rank - b.rank)
+          .map((entry) => entry.html);
+
+        target.innerHTML = cards.join("");
+      }
+
       function renderJournalExplorer(profiles, query = "") {
         const needle = query.trim().toLowerCase();
         const filtered = profiles.filter((profile) => {
@@ -1377,7 +1452,8 @@
             profile.title,
             profile.issn,
             profile.latestJif?.category,
-            profile.latestCas?.majorCategory
+            profile.latestCas?.majorCategory,
+            profile.latestScholarH5?.publicationTitle
           ].filter(Boolean).some((value) => String(value).toLowerCase().includes(needle));
         });
         const visible = filtered.slice(0, needle ? 12 : 6);
@@ -1392,7 +1468,22 @@
         }
         target.innerHTML = visible.map((profile) => {
           const trend = profile.trend;
-          const source = profile.total || profile.complete || profile.ytd || profile.latestJif || profile.latestCas;
+          const source = profile.total || profile.complete || profile.ytd || profile.latestJif || profile.latestCas || profile.latestScholarH5;
+          const primaryMetric = profile.total
+            ? { value: formatNumber(Number(profile.total.value || 0)), label: "OpenAlex total" }
+            : profile.latestScholarH5
+              ? { value: formatNumber(Number(profile.latestScholarH5.value || 0)), label: "Scholar h5-index" }
+              : { value: "-", label: "OpenAlex total" };
+          const secondaryMetric = profile.complete
+            ? { value: formatNumber(Number(profile.complete.value)), label: `${profile.complete.year} 完整年` }
+            : profile.latestScholarMedian
+              ? { value: formatNumber(Number(profile.latestScholarMedian.value || 0)), label: "Scholar h5-median" }
+              : { value: "-", label: "完整年" };
+          const tertiaryMetric = profile.ytd
+            ? { value: formatNumber(Number(profile.ytd.value)), label: `${profile.ytd.year} YTD` }
+            : profile.latestScholarH5?.rank
+              ? { value: `#${profile.latestScholarH5.rank}`, label: "Scholar 排名" }
+              : { value: "-", label: "当前年 YTD" };
           return `
             <article class="lookup-card ${profile.key === activeJournalKey ? "active" : ""}" data-journal-key="${escapeHtml(profile.key)}">
               <span class="pill">${escapeHtml(profile.issn || "Journal")}</span>
@@ -1401,19 +1492,20 @@
                 ${trend ? `<span class="trend-chip ${trend.kind}">${trend.label}</span>` : "<span>趋势待补充</span>"}
                 ${profile.latestQuartile ? `<span>${escapeHtml(profile.latestQuartile.category || "JCR")} ${escapeHtml(profile.latestQuartile.value)}</span>` : "<span>JCR 待授权导入</span>"}
                 ${profile.latestCas ? `<span>CAS ${escapeHtml(profile.latestCas.value)} 区</span>` : "<span>CAS 待授权导入</span>"}
+                ${profile.latestScholarH5 ? `<span>Scholar h5 ${escapeHtml(profile.latestScholarH5.value)}</span>` : ""}
               </div>
               <div class="lookup-values">
                 <div class="lookup-value">
-                  <strong>${formatNumber(Number(profile.total?.value || 0))}</strong>
-                  <span>OpenAlex total</span>
+                  <strong>${primaryMetric.value}</strong>
+                  <span>${primaryMetric.label}</span>
                 </div>
                 <div class="lookup-value">
-                  <strong>${profile.complete ? formatNumber(Number(profile.complete.value)) : "-"}</strong>
-                  <span>${profile.complete ? `${profile.complete.year} 完整年` : "完整年"}</span>
+                  <strong>${secondaryMetric.value}</strong>
+                  <span>${secondaryMetric.label}</span>
                 </div>
                 <div class="lookup-value">
-                  <strong>${profile.ytd ? formatNumber(Number(profile.ytd.value)) : "-"}</strong>
-                  <span>${profile.ytd ? `${profile.ytd.year} YTD` : "当前年 YTD"}</span>
+                  <strong>${tertiaryMetric.value}</strong>
+                  <span>${tertiaryMetric.label}</span>
                 </div>
               </div>
               ${trend ? `<div class="small-label">${trend.text}</div>` : ""}
@@ -1448,7 +1540,13 @@
           .filter((row) => row.metric === "jcr_quartile")
           .sort((a, b) => Number(b.year || 0) - Number(a.year || 0));
         const casRows = profile.casRows.sort((a, b) => Number(b.year || 0) - Number(a.year || 0));
-        const source = profile.total || profile.complete || profile.ytd || latestJifRows[0] || casRows[0];
+        const scholarH5Rows = profile.scholarRows
+          .filter((row) => row.metric === "google_scholar_h5_index")
+          .sort((a, b) => Number(b.year || 0) - Number(a.year || 0));
+        const scholarMedianRows = profile.scholarRows
+          .filter((row) => row.metric === "google_scholar_h5_median")
+          .sort((a, b) => Number(b.year || 0) - Number(a.year || 0));
+        const source = profile.total || profile.complete || profile.ytd || latestJifRows[0] || casRows[0] || scholarH5Rows[0];
         const trend = profile.trend;
         target.innerHTML = `
           <div class="profile-head">
@@ -1492,6 +1590,10 @@
                 <div class="status-item">
                   <strong>CAS 分区</strong>
                   <span class="small-label">${casRows.length ? `${casRows.length} 条授权导入记录，最新 ${casRows[0].year}: ${escapeHtml(casRows[0].majorCategory || "大类")} ${escapeHtml(casRows[0].value)} 区` : "待授权导入；2026 起官方分区发布轨道已单独标注停更状态。"}</span>
+                </div>
+                <div class="status-item">
+                  <strong>Scholar Metrics</strong>
+                  <span class="small-label">${scholarH5Rows.length ? `Google Scholar ${scholarH5Rows[0].year}: h5-index ${formatNumber(Number(scholarH5Rows[0].value))}${scholarMedianRows[0] ? `，h5-median ${formatNumber(Number(scholarMedianRows[0].value))}` : ""}` : "待公开 h5 指标快照。"}</span>
                 </div>
               </div>
             </section>
@@ -1561,6 +1663,7 @@
         renderJcrCadence(items);
         renderTimeline(items);
         renderJcrImpact(metrics);
+        renderScholarMetrics(metrics);
         const journalProfiles = buildJournalProfiles(metrics);
         renderJournalExplorer(journalProfiles);
         document.querySelector("#journalSearch").addEventListener("input", (event) => {

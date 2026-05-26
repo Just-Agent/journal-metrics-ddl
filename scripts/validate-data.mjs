@@ -151,6 +151,15 @@ function validateMetric(metric, topicId, file, index) {
       errors.push(`${label} invalid CAS TOP marker ${metric.isTop}`);
     }
   }
+  if (["google_scholar_h5_index", "google_scholar_h5_median"].includes(metric.metric)) {
+    if (!Number.isFinite(Number(metric.value)) || Number(metric.value) < 0) {
+      errors.push(`${label} invalid Google Scholar ${metric.metric} ${metric.value}`);
+    }
+    requireFields(metric, ["publicationTitle", "venueType", "rank", "sourceUrl"], label);
+    if (!["journal", "conference", "repository", "other"].includes(String(metric.venueType))) {
+      errors.push(`${label} invalid venueType ${metric.venueType}`);
+    }
+  }
   scan(metric, label);
 }
 

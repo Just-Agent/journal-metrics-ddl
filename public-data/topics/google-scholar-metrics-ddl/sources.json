@@ -1,0 +1,29 @@
+{
+  "topicId": "google-scholar-metrics-ddl",
+  "sourceFamilies": [
+    {
+      "sourceLabel": "公开来源",
+      "id": "google-scholar-blog",
+      "name": "Google Scholar Blog",
+      "url": "https://scholar.googleblog.com/2025/07/2025-scholar-metrics-released.html",
+      "type": "official-blog",
+      "markers": [
+        "Scholar Metrics",
+        "h5-index",
+        "h5-median"
+      ]
+    },
+    {
+      "sourceLabel": "公开来源",
+      "id": "google-scholar-top-venues",
+      "name": "Google Scholar Metrics Top Publications",
+      "url": "https://scholar.google.com/citations?view_op=top_venues&hl=en",
+      "type": "official-metrics-page",
+      "markers": [
+        "Top publications",
+        "h5-index",
+        "h5-median"
+      ]
+    }
+  ]
+}

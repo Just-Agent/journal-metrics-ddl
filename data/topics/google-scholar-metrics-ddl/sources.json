@@ -1,0 +1,37 @@
+{
+  "topicId": "google-scholar-metrics-ddl",
+  "sourceFamilies": [
+    {
+      "id": "google-scholar-blog",
+      "name": "Google Scholar Blog",
+      "url": "https://scholar.googleblog.com/2025/07/2025-scholar-metrics-released.html",
+      "type": "official-blog",
+      "accessMode": "public",
+      "parser": "google-scholar-blog-release",
+      "markers": [
+        "Scholar Metrics",
+        "h5-index",
+        "h5-median"
+      ],
+      "refreshCadence": "annual",
+      "coverageNote": "用于追踪 Google Scholar Metrics 年度发布时间。",
+      "linkCheckMode": "manual_verified"
+    },
+    {
+      "id": "google-scholar-top-venues",
+      "name": "Google Scholar Metrics Top Publications",
+      "url": "https://scholar.google.com/citations?view_op=top_venues&hl=en",
+      "type": "official-metrics-page",
+      "accessMode": "public",
+      "parser": "google-scholar-top-venues",
+      "markers": [
+        "Top publications",
+        "h5-index",
+        "h5-median"
+      ],
+      "refreshCadence": "annual",
+      "coverageNote": "用于公开展示 Scholar Metrics 的 top publications h5-index 与 h5-median 快照。",
+      "linkCheckMode": "manual_verified"
+    }
+  ]
+}
