@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-24T20:23:42.383Z",
+  "generatedAt": "2026-05-26T09:24:15.477Z",
   "mode": "journal-metrics-source-crawl",
   "topics": [
     {
@@ -15,10 +15,45 @@
         },
         {
           "id": "cas-partition-platform",
-          "url": "https://www.fenqubiao.com/",
-          "parser": "licensed-or-institutional-access",
+          "url": "https://www.fenqubiao.com/User/Help.aspx",
+          "parser": "manual-verified-help-page",
           "accessMode": "manual_verified",
           "status": "manual_or_authorized_source"
+        },
+        {
+          "id": "cas-partition-data-introduction",
+          "url": "https://www.fenqubiao.com/User/DataIntroduction.aspx",
+          "parser": "manual-verified-data-source-page",
+          "accessMode": "manual_verified",
+          "status": "manual_or_authorized_source"
+        },
+        {
+          "id": "cas-partition-use-protocol",
+          "url": "https://www.fenqubiao.com/User/UseProtocol.aspx",
+          "parser": "manual-verified-use-protocol-page",
+          "accessMode": "manual_verified",
+          "status": "manual_or_authorized_source"
+        }
+      ]
+    },
+    {
+      "topicId": "google-scholar-metrics-ddl",
+      "sources": [
+        {
+          "id": "google-scholar-blog",
+          "url": "https://scholar.googleblog.com/2025/07/2025-scholar-metrics-released.html",
+          "parser": "google-scholar-blog-release",
+          "accessMode": "public",
+          "status": "reachable",
+          "httpStatus": 200
+        },
+        {
+          "id": "google-scholar-top-venues",
+          "url": "https://scholar.google.com/citations?view_op=top_venues&hl=en",
+          "parser": "google-scholar-top-venues",
+          "accessMode": "public",
+          "status": "http_error",
+          "httpStatus": 403
         }
       ]
     },
