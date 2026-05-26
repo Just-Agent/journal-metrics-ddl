@@ -34,7 +34,7 @@ jobs:
       - name: Commit updated data
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          commit_message: data: update topic family data
+          commit_message: 'data: update topic family data'
           file_pattern: 'data/*.json data/topics/**/*.json public-data/**/*.json'
       - name: Notify Just-DDL Hub
         if: ${{ env.DISPATCH_TOKEN != '' }}
