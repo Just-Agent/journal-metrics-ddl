@@ -16,7 +16,8 @@
     "sourceLabel": "Google Scholar Metrics Top publications",
     "accessMode": "public",
     "scopeNote": "Google Scholar Metrics 2025 top publications page, h5-index for articles published in 2020-2024.",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   },
   {
     "id": "gsm-2025-nature-h5-median",
@@ -35,7 +36,8 @@
     "sourceLabel": "Google Scholar Metrics Top publications",
     "accessMode": "public",
     "scopeNote": "Google Scholar Metrics 2025 top publications page, h5-median for articles published in 2020-2024.",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   },
   {
     "id": "gsm-2025-cvpr-h5-index",
@@ -54,7 +56,8 @@
     "sourceLabel": "Google Scholar Metrics Top publications",
     "accessMode": "public",
     "scopeNote": "Google Scholar Metrics 2025 top publications page, h5-index for articles published in 2020-2024.",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   },
   {
     "id": "gsm-2025-cvpr-h5-median",
@@ -73,7 +76,8 @@
     "sourceLabel": "Google Scholar Metrics Top publications",
     "accessMode": "public",
     "scopeNote": "Google Scholar Metrics 2025 top publications page, h5-median for articles published in 2020-2024.",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   },
   {
     "id": "gsm-2025-nejm-h5-index",
@@ -92,7 +96,8 @@
     "sourceLabel": "Google Scholar Metrics Top publications",
     "accessMode": "public",
     "scopeNote": "Google Scholar Metrics 2025 top publications page, h5-index for articles published in 2020-2024.",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   },
   {
     "id": "gsm-2025-nejm-h5-median",
@@ -111,7 +116,8 @@
     "sourceLabel": "Google Scholar Metrics Top publications",
     "accessMode": "public",
     "scopeNote": "Google Scholar Metrics 2025 top publications page, h5-median for articles published in 2020-2024.",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   },
   {
     "id": "gsm-2025-science-h5-index",
@@ -130,7 +136,8 @@
     "sourceLabel": "Google Scholar Metrics Top publications",
     "accessMode": "public",
     "scopeNote": "Google Scholar Metrics 2025 top publications page, h5-index for articles published in 2020-2024.",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   },
   {
     "id": "gsm-2025-science-h5-median",
@@ -149,7 +156,8 @@
     "sourceLabel": "Google Scholar Metrics Top publications",
     "accessMode": "public",
     "scopeNote": "Google Scholar Metrics 2025 top publications page, h5-median for articles published in 2020-2024.",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   },
   {
     "id": "gsm-2025-nature-communications-h5-index",
@@ -168,7 +176,8 @@
     "sourceLabel": "Google Scholar Metrics Top publications",
     "accessMode": "public",
     "scopeNote": "Google Scholar Metrics 2025 top publications page, h5-index for articles published in 2020-2024.",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   },
   {
     "id": "gsm-2025-nature-communications-h5-median",
@@ -187,7 +196,8 @@
     "sourceLabel": "Google Scholar Metrics Top publications",
     "accessMode": "public",
     "scopeNote": "Google Scholar Metrics 2025 top publications page, h5-median for articles published in 2020-2024.",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   },
   {
     "id": "gsm-2025-lancet-h5-index",
@@ -206,7 +216,8 @@
     "sourceLabel": "Google Scholar Metrics Top publications",
     "accessMode": "public",
     "scopeNote": "Google Scholar Metrics 2025 top publications page, h5-index for articles published in 2020-2024.",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   },
   {
     "id": "gsm-2025-lancet-h5-median",
@@ -225,7 +236,8 @@
     "sourceLabel": "Google Scholar Metrics Top publications",
     "accessMode": "public",
     "scopeNote": "Google Scholar Metrics 2025 top publications page, h5-median for articles published in 2020-2024.",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   },
   {
     "id": "gsm-2025-neurips-h5-index",
@@ -244,7 +256,8 @@
     "sourceLabel": "Google Scholar Metrics Top publications",
     "accessMode": "public",
     "scopeNote": "Google Scholar Metrics 2025 top publications page, h5-index for articles published in 2020-2024.",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   },
   {
     "id": "gsm-2025-neurips-h5-median",
@@ -263,7 +276,8 @@
     "sourceLabel": "Google Scholar Metrics Top publications",
     "accessMode": "public",
     "scopeNote": "Google Scholar Metrics 2025 top publications page, h5-median for articles published in 2020-2024.",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   },
   {
     "id": "gsm-2025-iclr-h5-index",
@@ -282,7 +296,8 @@
     "sourceLabel": "Google Scholar Metrics Top publications",
     "accessMode": "public",
     "scopeNote": "Google Scholar Metrics 2025 top publications page, h5-index for articles published in 2020-2024.",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   },
   {
     "id": "gsm-2025-iclr-h5-median",
@@ -301,7 +316,8 @@
     "sourceLabel": "Google Scholar Metrics Top publications",
     "accessMode": "public",
     "scopeNote": "Google Scholar Metrics 2025 top publications page, h5-median for articles published in 2020-2024.",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   },
   {
     "id": "gsm-2025-advanced-materials-h5-index",
@@ -320,7 +336,8 @@
     "sourceLabel": "Google Scholar Metrics Top publications",
     "accessMode": "public",
     "scopeNote": "Google Scholar Metrics 2025 top publications page, h5-index for articles published in 2020-2024.",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   },
   {
     "id": "gsm-2025-advanced-materials-h5-median",
@@ -339,7 +356,8 @@
     "sourceLabel": "Google Scholar Metrics Top publications",
     "accessMode": "public",
     "scopeNote": "Google Scholar Metrics 2025 top publications page, h5-median for articles published in 2020-2024.",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   },
   {
     "id": "gsm-2025-cell-h5-index",
@@ -358,7 +376,8 @@
     "sourceLabel": "Google Scholar Metrics Top publications",
     "accessMode": "public",
     "scopeNote": "Google Scholar Metrics 2025 top publications page, h5-index for articles published in 2020-2024.",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   },
   {
     "id": "gsm-2025-cell-h5-median",
@@ -377,6 +396,7 @@
     "sourceLabel": "Google Scholar Metrics Top publications",
     "accessMode": "public",
     "scopeNote": "Google Scholar Metrics 2025 top publications page, h5-median for articles published in 2020-2024.",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   }
 ]

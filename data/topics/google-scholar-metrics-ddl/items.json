@@ -22,7 +22,8 @@
       "2025"
     ],
     "description": "Google Scholar Blog 于 2025 年 7 月 22 日发布 2025 Scholar Metrics，用 h5-index 和 h5-median 展示近五完整年份的期刊与会议影响力。",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2020-2024"
   },
   {
     "topicId": "google-scholar-metrics-ddl",
@@ -47,7 +48,8 @@
       "2024"
     ],
     "description": "Google Scholar Blog 于 2024 年 7 月 9 日发布 2024 Scholar Metrics；该轨道适合补充会议和期刊的公开 h5 指标观察。",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2019-2023"
   },
   {
     "topicId": "google-scholar-metrics-ddl",
@@ -72,7 +74,8 @@
       "2023"
     ],
     "description": "Google Scholar Blog 于 2023 年 7 月 19 日发布 2023 Scholar Metrics。",
-    "linkCheckMode": "manual_verified"
+    "linkCheckMode": "manual_verified",
+    "coverageWindow": "2018-2022"
   },
   {
     "topicId": "google-scholar-metrics-ddl",

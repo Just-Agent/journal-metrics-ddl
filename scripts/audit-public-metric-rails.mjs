@@ -218,6 +218,7 @@ function auditGoogleScholarPublicRail() {
     if (metric.sourceUrl !== GOOGLE_SCHOLAR_TOP_VENUES_URL) errors.push(`${label}: sourceUrl must be the top venues page`);
     if (!["journal", "conference"].includes(metric.venueType)) errors.push(`${label}: venueType must be journal or conference`);
     if (!metric.publicationTitle || !metric.journalTitle) errors.push(`${label}: missing publicationTitle or journalTitle`);
+    if (metric.coverageWindow !== "2020-2024") errors.push(`${label}: coverageWindow must be 2020-2024`);
 
     ranks.add(Number(metric.rank));
     const key = publicationKey(metric);

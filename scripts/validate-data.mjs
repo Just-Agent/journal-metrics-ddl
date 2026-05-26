@@ -155,9 +155,13 @@ function validateMetric(metric, topicId, file, index) {
     if (!Number.isFinite(Number(metric.value)) || Number(metric.value) < 0) {
       errors.push(`${label} invalid Google Scholar ${metric.metric} ${metric.value}`);
     }
-    requireFields(metric, ["publicationTitle", "venueType", "rank", "sourceUrl"], label);
+    requireFields(metric, ["publicationTitle", "venueType", "rank", "sourceUrl", "coverageWindow"], label);
     if (!["journal", "conference", "repository", "other"].includes(String(metric.venueType))) {
       errors.push(`${label} invalid venueType ${metric.venueType}`);
+    }
+    const expectedCoverage = `${Number(metric.year) - 5}-${Number(metric.year) - 1}`;
+    if (metric.coverageWindow !== expectedCoverage) {
+      errors.push(`${label} coverageWindow must be ${expectedCoverage}`);
     }
   }
   scan(metric, label);

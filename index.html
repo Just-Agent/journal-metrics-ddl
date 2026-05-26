@@ -1421,7 +1421,7 @@
                 <article class="jcr-card">
                   <span class="pill">#${escapeHtml(source.rank || "-")} · ${escapeHtml(source.venueType || "publication")}</span>
                   <h3>${escapeHtml(title)}</h3>
-                  <p>Google Scholar Metrics ${escapeHtml(source.year || "")} · articles published in 2020-2024</p>
+                  <p>Google Scholar Metrics ${escapeHtml(source.year || "")} · articles published in ${escapeHtml(source.coverageWindow || "2020-2024")}</p>
                   <div class="jcr-values">
                     <div class="jcr-value">
                       <strong>${h5 ? formatNumber(Number(h5.value)) : "-"}</strong>

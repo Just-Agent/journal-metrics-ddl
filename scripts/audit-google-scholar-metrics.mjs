@@ -6,6 +6,11 @@ const TOPIC_ID = "google-scholar-metrics-ddl";
 const RAW_DIR = path.join(ROOT, "data", "topics", TOPIC_ID);
 const PUBLIC_DIR = path.join(ROOT, "public-data", "topics", TOPIC_ID);
 const TOP_VENUES_URL = "https://scholar.google.com/citations?view_op=top_venues&hl=en";
+const RELEASE_COVERAGE_WINDOWS = new Map([
+  ["google-scholar-metrics-2025-release", "2020-2024"],
+  ["google-scholar-metrics-2024-release", "2019-2023"],
+  ["google-scholar-metrics-2023-release", "2018-2022"]
+]);
 const errors = [];
 
 function readJson(filePath) {
@@ -60,6 +65,10 @@ function validateItems(items) {
     assert(isHttpUrl(release.sourceUrl), `${release.id}: missing official sourceUrl`);
     assert(release.source === "Google Scholar Blog", `${release.id}: source must be Google Scholar Blog`);
     assert(/^20\d{2}-\d{2}-\d{2}$/.test(release.date || ""), `${release.id}: date must be YYYY-MM-DD`);
+    assert(
+      release.coverageWindow === RELEASE_COVERAGE_WINDOWS.get(release.id),
+      `${release.id}: coverageWindow must be ${RELEASE_COVERAGE_WINDOWS.get(release.id)}`
+    );
   }
   if (forecast) {
     const basisEvents = Array.isArray(forecast.basisEvents) ? forecast.basisEvents : [];
@@ -93,6 +102,7 @@ function validateMetricPairs(metrics, label) {
     assert(isHttpUrl(metric.url), `${recordLabel}: missing url`);
     assert(["journal", "conference"].includes(metric.venueType), `${recordLabel}: venueType must be journal or conference`);
     assert(metric.publicationTitle && metric.journalTitle, `${recordLabel}: missing publicationTitle/journalTitle`);
+    assert(metric.coverageWindow === "2020-2024", `${recordLabel}: coverageWindow must be 2020-2024`);
     const key = metricKey(metric);
     const group = byPublication.get(key) || [];
     group.push(metric);
