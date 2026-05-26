@@ -26,9 +26,15 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
+      - name: Resolve requested topic
+        id: requested-topic
+        shell: bash
+        run: |
+          topic_id="$(jq -r '.inputs.topic_id // ""' "$GITHUB_EVENT_PATH")"
+          echo "topic_id=${topic_id}" >> "$GITHUB_OUTPUT"
       - run: npm run crawl
         env:
-          TOPIC_ID: ${{ github.event.inputs.topic_id || '' }}
+          TOPIC_ID: ${{ steps.requested-topic.outputs.topic_id }}
       - run: npm run import:jcr-history
         env:
           JCR_HISTORY_CSV: ${{ secrets.JCR_HISTORY_CSV }}
@@ -47,7 +53,7 @@ jobs:
         if: ${{ env.DISPATCH_TOKEN != '' }}
         env:
           GH_TOKEN: ${{ env.DISPATCH_TOKEN }}
-          TOPIC_ID: ${{ github.event.inputs.topic_id || '' }}
+          TOPIC_ID: ${{ steps.requested-topic.outputs.topic_id }}
         run: |
           topic_id="${TOPIC_ID:-$DEFAULT_TOPIC_ID}"
           if [ -n "$topic_id" ]; then
