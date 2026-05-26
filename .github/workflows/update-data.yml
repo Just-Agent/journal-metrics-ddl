@@ -28,7 +28,7 @@ jobs:
           node-version: '24'
       - run: npm run crawl
         env:
-          TOPIC_ID: ${{ inputs.topic_id }}
+          TOPIC_ID: ${{ github.event.inputs.topic_id || '' }}
       - run: npm run import:jcr-history
         env:
           JCR_HISTORY_CSV: ${{ secrets.JCR_HISTORY_CSV }}
@@ -47,7 +47,7 @@ jobs:
         if: ${{ env.DISPATCH_TOKEN != '' }}
         env:
           GH_TOKEN: ${{ env.DISPATCH_TOKEN }}
-          TOPIC_ID: ${{ inputs.topic_id }}
+          TOPIC_ID: ${{ github.event.inputs.topic_id || '' }}
         run: |
           topic_id="${TOPIC_ID:-$DEFAULT_TOPIC_ID}"
           if [ -n "$topic_id" ]; then
