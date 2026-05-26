@@ -14,12 +14,13 @@
     "test:imports": "node scripts/test-authorized-imports.mjs",
     "metric:series:audit": "node scripts/audit-metric-series.mjs",
     "metric:public-rails:audit": "node scripts/audit-public-metric-rails.mjs",
+    "metric:access-mode:audit": "node scripts/audit-access-modes.mjs",
     "metric:google-scholar:audit": "node scripts/audit-google-scholar-metrics.mjs",
     "forecast:audit": "node scripts/audit-forecasts.mjs",
     "validate": "node scripts/validate-data.mjs",
     "export:public": "node scripts/export-public-data.mjs",
     "validate:public": "node scripts/validate-public-data.mjs",
-    "build": "npm run test:crawler && npm run test:imports && npm run forecast:audit && npm run metric:series:audit && npm run validate && npm run export:public && npm run validate:public && npm run metric:public-rails:audit && npm run metric:google-scholar:audit && npm run test:public-export && npm run test:public-export:cas && npm run test:public-export:jcr",
+    "build": "npm run test:crawler && npm run test:imports && npm run forecast:audit && npm run metric:series:audit && npm run validate && npm run export:public && npm run validate:public && npm run metric:access-mode:audit && npm run metric:public-rails:audit && npm run metric:google-scholar:audit && npm run test:public-export && npm run test:public-export:cas && npm run test:public-export:jcr",
     "link-check": "node scripts/link-check.mjs"
   }
 }
